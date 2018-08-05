@@ -4,6 +4,7 @@ import {Grid, CircularProgress, Button } from '@material-ui/core';
 import {API} from '../utils/api';
 
 import ChoiceElement from './choice';
+import StatementElement from './statement';
 
 import './experiment.css';
 
@@ -27,8 +28,8 @@ export default class Experiment extends Component {
       content: undefined,
       elements: undefined,
       current: undefined,
-      currentIndex: 0,
-      responses: []
+      responses: [],
+      submitted: undefined
     }
   }
 
@@ -37,17 +38,22 @@ export default class Experiment extends Component {
     //TODO fetch experiment json
     API.get(`/experiments/${this.state.code}/content`)
       .then(res => {
-        console.log("DATA", res.data);
-        this.setState({content: res.data, loaded: true});
-        this.setState({elements: res.data.elements});
-        this.setState({current: {...res.data.elements[0], index: 0}});
+        this.setState({
+          content: res.data, 
+          loaded: true, 
+          elements: res.data.elements, 
+          current: {...res.data.elements[0], index: 0}});
       });
   }
 
-  isNextButtonVisible = (elementType) => {
-    if (elementType === 'choice') {
-      return true;
-    }
+  isNextButtonVisible = element => {
+    let typ = undefined;
+    if (element && element.type) typ = element.type;
+
+    let interactiveElements = ['ultimatum', 'dictator', 'gonogo', 'temporal-discounting', 'bart', 'finished'];
+
+    if (interactiveElements.includes(typ)) 
+      return false;
     return true;
   }
 
@@ -70,7 +76,7 @@ export default class Experiment extends Component {
       );
     } else
       this.setState(
-        {responses: [...this.state.responses, elementResponse], current: undefined},
+        {responses: [...this.state.responses, elementResponse], current: {type: 'finished'}},
         () => {this.finish()}
       );
   }
@@ -80,7 +86,7 @@ export default class Experiment extends Component {
   }
 
   render() {
-    let {loaded, current, responses} = this.state;
+    let {loaded, current} = this.state;
 
     if (loaded === undefined) {
       return (
@@ -89,45 +95,45 @@ export default class Experiment extends Component {
           <CircularProgress />
         </Grid>);
     } else if (loaded === false) {
-      //TODO failed to load
-      return (<div>Cannot load experiment</div>);
+      return <div>Cannot load experiment</div>;
     }
 
     return (
-      <div style={styles.root}>
-        <Grid container justify="flex-start" alignItems="center" direction="column">
+      <Grid container justify="flex-start" alignItems="center" direction="column" style={styles.root}>
+        
         {current && this.renderElement(current)}
-        {current === undefined &&
-            <div>
-              <p>Finished :D</p>
-              <code>{JSON.stringify(responses)}</code>
-            </div>
-        }
+        
+        { this.isNextButtonVisible(current) &&
+        <Grid container justify="center" alignItems="center">
+          <Button variant="contained" color="primary" onClick={this.next} size="large">Next</Button>
         </Grid>
-      </div>
+        }
+
+      </Grid>
     );
   }
 
   renderElement = element => {
-    let typ = element.type;
-    return (
-      <div className="element-container">
-      { typ === 'statement' &&
-        <Grid item>
-          <div dangerouslySetInnerHTML={{__html:element.content}}></div>
-        </Grid>
-      }
-      { typ === 'choice' && 
-        <Grid item>
-          <ChoiceElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} />
-        </Grid>
-      }
-      { this.isNextButtonVisible(typ) &&
-        <Grid container justify="center" alignItems="center">
-          <Button variant="contained" color="primary" onClick={this.next} size="large">Next</Button>
-        </Grid>
-      }
-    </div>
-    );
+    let typ = undefined;
+    if (element && element.type) typ = element.type;
+
+    switch (typ) {
+      case 'statement':
+        return <StatementElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} />;
+      case 'choice':
+        return <ChoiceElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} />;
+      case 'finished':
+        return (
+          <div>
+            <p>Finished. Here is what is being submitted:</p>
+            <code>{JSON.stringify(this.state.responses)}</code>
+          </div>);
+      default:
+        return (
+          <div>
+            <p>UNKNOWN ELEMENT</p>
+          </div>
+        );
+    }
   }
 }

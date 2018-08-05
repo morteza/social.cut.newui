@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 
-import {API} from '../utils/api';
-import { RadioGroup, Radio, FormControlLabel, FormControl, FormGroup } from '../../node_modules/@material-ui/core';
-
-const styles = {
-  root: {
-    display: 'flex',
-    minWidth: '100%'
-  }
-};
+import { RadioGroup, Radio, FormControlLabel } from '../../node_modules/@material-ui/core';
 
 export default class Choice extends Component {
 
@@ -16,11 +8,7 @@ export default class Choice extends Component {
     super(props);
 
     this.state = {
-      value: null,
-      choices: [
-        {value: 1, label: "One"},
-        {value: 2, label: "Two"}
-      ]
+      value: null
     }
   }
 
@@ -45,8 +33,8 @@ export default class Choice extends Component {
             value={this.state.value}
             onChange={this.handleChange}
           >
-          { this.state.choices.map(c =>
-            <FormControlLabel key={c.value} value={c.value + ""} control={<Radio />} label={c.label} />
+          { this.props.element.choices && this.props.element.choices.map(c =>
+            <FormControlLabel key={c.value} value={c.value + ""} control={<Radio />} label={c.title} />
           )}
         </RadioGroup>
       </div>
