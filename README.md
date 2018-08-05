@@ -1,3 +1,3 @@
-# Designer Application for *cut.social*
+# New Subject View Application for *cut.social*
 
-This repository contains codes of a designer for [cut.social](https://cut.social).
+This repository contains codes for subject view of [cut.social](https://cut.social).
