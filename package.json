@@ -1,0 +1,25 @@
+{
+  "name": "social.cut.designer",
+  "version": "0.1.0",
+  "private": true,
+  "homepage": "http://beta.cut.social/designer",
+  "dependencies": {
+    "@material-ui/core": "^1.2.0",
+    "@material-ui/icons": "^2.0.0",
+    "axios": "^0.18.0",
+    "react": "^16.4.0",
+    "react-cookies": "^0.1.0",
+    "react-dom": "^16.4.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.4",
+    "react-sortable-hoc": "^0.8.3",
+    "react-timer-mixin": "^0.13.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "dist": "cp -r ./build/ ~/workspace/social.cut.ui.heroku/www/designer/",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
