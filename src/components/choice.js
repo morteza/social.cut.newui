@@ -6,10 +6,13 @@ export default class Choice extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
-      value: null
+      value: undefined
     }
+  }
+
+  componentWillUpdate() {
+    if (this.state.value) this.setState({ value: undefined});
   }
 
   handleChange = event => {
@@ -34,7 +37,7 @@ export default class Choice extends Component {
             onChange={this.handleChange}
           >
           { this.props.element.choices && this.props.element.choices.map(c =>
-            <FormControlLabel key={c.value} value={c.value + ""} control={<Radio />} label={c.title} />
+            <FormControlLabel key={c.value} value={c.value + ""} control={<Radio />} label={c.label || c.title} />
           )}
         </RadioGroup>
       </div>
