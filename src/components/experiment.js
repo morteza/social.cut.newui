@@ -25,12 +25,9 @@ export default class Experiment extends Component {
   constructor(props) {
     super(props);
 
-    var code = props.match.params.experimentCode;
-    if (!code || code.length===0) code = props.location.hash.substring(1);
-
     this.state = {
       loaded: undefined,
-      code: code,
+      code: this.props.location.hash.substring(1),
       content: undefined,
       elements: undefined,
       current: undefined,
