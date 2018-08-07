@@ -1,5 +1,12 @@
 import React, { Component } from 'react';
-import { Grid } from '../../node_modules/@material-ui/core';
+import { Grid } from '@material-ui/core';
+
+const styles = {
+  root: {
+    padding: 20,
+    flexGrow: 1
+  }
+};
 
 export default class Statement extends Component {
 
@@ -21,8 +28,11 @@ export default class Statement extends Component {
 
   render() {
     return (
-      <Grid item>
+      <Grid container style={styles.root} direction="column">
+        <Grid item>
         <div dangerouslySetInnerHTML={{__html: this.props.element.content}}></div>
-      </Grid>);
+        </Grid>
+      </Grid>
+    );
   }
 }

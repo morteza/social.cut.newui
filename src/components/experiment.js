@@ -14,8 +14,8 @@ const styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    padding: 20,
+    justifyContent: 'space-evenly',
+    padding: 0,
     zIndex: 100
   }
 };
@@ -83,7 +83,7 @@ export default class Experiment extends Component {
     let typ = undefined;
     if (element && element.type) typ = element.type;
 
-    let interactiveElements = ['ultimatum', /*'dictator',*/ 'gonogo', 'temporal-discounting', 'bart', 'finished'];
+    let interactiveElements = ['ultimatum', 'dictator', 'gonogo', 'temporal-discounting', 'bart', 'finished'];
 
     if (interactiveElements.includes(typ)) 
       return false;
@@ -169,7 +169,7 @@ export default class Experiment extends Component {
       case 'choice':
         return <ChoiceElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} />;
       case 'dictator':
-        return <DictatorElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} />;
+        return <DictatorElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} onNext={this.next}/>;
       case 'finished':
         return (
           <div>

@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 
-import { RadioGroup, Radio, FormControlLabel } from '../../node_modules/@material-ui/core';
+import { RadioGroup, Radio, FormControlLabel, Grid } from '@material-ui/core';
+
+const styles = {
+  root: {
+    padding: 20,
+    flexGrow: 1
+  }
+};
 
 export default class Choice extends Component {
 
@@ -27,9 +34,12 @@ export default class Choice extends Component {
 
   render() {
     return (
-      <div>
-        <p>{this.props.element.content}</p>
+      <Grid container style={styles.root} direction="column">
+        <Grid item>
+        <div dangerouslySetInnerHTML={{__html: this.props.element.content}}></div>
         <br />
+        </Grid>
+        <Grid item>
         <RadioGroup
             aria-label={this.props.element.title | "Choices"}
             name="choices"
@@ -40,7 +50,8 @@ export default class Choice extends Component {
             <FormControlLabel key={c.value} value={c.value + ""} control={<Radio />} label={c.label || c.title} />
           )}
         </RadioGroup>
-      </div>
+        </Grid>
+      </Grid>
     );
   }
 }
