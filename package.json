@@ -1,8 +1,8 @@
 {
-  "name": "social.cut.designer",
+  "name": "social.cut.newui",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://beta.cut.social/designer",
+  "homepage": "http://beta.cut.social/newui",
   "dependencies": {
     "@material-ui/core": "^1.2.0",
     "@material-ui/icons": "^2.0.0",
@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "dist": "cp -r ./build/ ~/workspace/social.cut.ui.heroku/www/designer/",
+    "dist": "cp -r ./build/ ~/workspace/social.cut.ui.heroku/www/newui/",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

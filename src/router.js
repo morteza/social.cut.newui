@@ -19,7 +19,7 @@ export default class DesignerRouter extends Component {
     return (
       <BrowserRouter basename="/" getUserConfirmation={this.routeChangeHandler}>
         <Switch>
-          <Route path="/:experimentCode" component={Experiment} />
+          <Route path="/:experimentCode?" component={Experiment} />
         </Switch>
       </BrowserRouter>
     )

@@ -24,9 +24,13 @@ export default class Experiment extends Component {
 
   constructor(props) {
     super(props);
+
+    var code = props.match.params.experimentCode;
+    if (!code || code.length===0) code = props.location.hash.substring(1);
+
     this.state = {
       loaded: undefined,
-      code: props.match.params.experimentCode,
+      code: code,
       content: undefined,
       elements: undefined,
       current: undefined,
@@ -57,8 +61,7 @@ export default class Experiment extends Component {
     axios.get('https://jsonip.com/')
       .then(res => {this.setState({ip: res.data.ip})});
 
-    var test = true;
-    if (test) {
+    if (this.state.code === 'test') {
       var content = this.testContent();
       this.setState({
         content: content, 

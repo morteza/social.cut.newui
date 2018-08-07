@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import CutRouter from './router';
-import { MuiThemeProvider, createMuiTheme } from '../node_modules/@material-ui/core';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 //import registerServiceWorker from './registerServiceWorker';
 
 const theme = createMuiTheme({
