@@ -95,7 +95,7 @@ export default class Dictator extends Component {
             </CardContent>
           </Card>
         </Grid>
-        {/*<Button variant="contained" color="secondary" onClick={this.props.onNext} size="large">Next</Button>*/}
+        <Button variant="contained" color="secondary" onClick={this.props.onNext} size="large">TEST next</Button>
       </Grid>
     );
   }

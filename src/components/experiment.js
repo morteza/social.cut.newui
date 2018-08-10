@@ -50,7 +50,8 @@ export default class Experiment extends Component {
       elements: [
         {id: 1, type: "choice", content: "This is a test choice", choices: [{value: "Two", label: "Two (2)"},{value: "Four", label: "Four (4)"}]},
         {id: 2, type: "choice", content: "This is a test choice #2", choices: [{value: "Two", label: "Two (2)"},{value: "Four", label: "Four (4)"}]},
-        {id: 3, type: "dictator", content: "This is a dictator game"}
+        {id: 3, type: "dictator", content: "This is a dictator game"},
+        {id: 4, type: "choice", content: "This is a test choice", choices: [{value: "Two", label: "Two (2)"},{value: "Four", label: "Four (4)"}]}
       ]
     }
   }
