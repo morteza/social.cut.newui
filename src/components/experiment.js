@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Grid, CircularProgress, Button } from '@material-ui/core';
+import {Grid, CircularProgress, Button, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 
 import {API} from '../utils/api';
 
@@ -24,7 +24,7 @@ export default class Experiment extends Component {
 
   constructor(props) {
     super(props);
-
+    
     this.state = {
       loaded: undefined,
       code: this.props.location.hash.substring(1),
@@ -35,7 +35,9 @@ export default class Experiment extends Component {
       submitted: undefined,
       ip: undefined,
       email: undefined,
-      sessionTrackingCode: undefined
+      sessionTrackingCode: undefined,
+      direction: 'ltr',
+      theme:  createMuiTheme({palette: {}})
     }
   }
 
@@ -43,12 +45,12 @@ export default class Experiment extends Component {
     return {
       title: "",
       description:"",
+      direction: "rtl",
       study: "",
       elements: [
+        {id: 3, type: "dictator", content: "This is a dictator game"},
         {id: 1, type: "choice", content: "This is a test choice", choices: [{value: "Two", label: "Two (2)"},{value: "Four", label: "Four (4)"}]},
-        {id: 4, type: "choice", content: "This is a test choice #2", choices: [{value: "Two", label: "Two (2)"},{value: "Four", label: "Four (4)"}]},
-        {id: 2, type: "statement", content: "This is a test statement"},
-        {id: 3, type: "dictator", content: "This is a dictator game"}
+        {id: 2, type: "choice", content: "This is a test choice #2", choices: [{value: "Two", label: "Two (2)"},{value: "Four", label: "Four (4)"}]}
       ]
     }
   }
@@ -64,7 +66,10 @@ export default class Experiment extends Component {
         content: content, 
         loaded: true, 
         elements: content.elements, 
-        current: {...content.elements[0], index: 0}});
+        current: {...content.elements[0], index: 0},
+        direction:  content.direction || 'ltr',
+        theme: createMuiTheme({palette: {direction: content.direction}})
+      });
         return ;
     }
 
@@ -74,8 +79,11 @@ export default class Experiment extends Component {
         this.setState({
           content: res.data, 
           loaded: true, 
-          elements: res.data.elements, 
-          current: {...res.data.elements[0], index: 0}});
+          elements: res.data.elements,
+          current: {...res.data.elements[0], index: 0},
+          direction: res.data.direction || 'ltr',
+          theme: createMuiTheme({palette: {direction: res.data.direction}})
+        });
       }); 
   }
 
@@ -130,7 +138,7 @@ export default class Experiment extends Component {
   }
 
   render() {
-    let {loaded, current} = this.state;
+    let {loaded, current, direction, theme} = this.state;
 
     if (loaded === undefined) {
       return (
@@ -143,9 +151,10 @@ export default class Experiment extends Component {
     }
 
     return (
+      <MuiThemeProvider theme={theme}><div dir={direction}>
       <Grid container justify="flex-start" alignItems="center" direction="column" style={styles.root}>
         
-        {current && this.renderElement(current)}
+        {current && this.renderElement(current, direction)}
         
         { this.isNextButtonVisible(current) &&
         <Grid container justify="center" alignItems="center">
@@ -154,10 +163,11 @@ export default class Experiment extends Component {
         }
 
       </Grid>
+      </div></MuiThemeProvider>
     );
   }
 
-  renderElement = element => {
+  renderElement = (element, direction) => {
 
     let {responses, ip} = this.state;
     let typ = undefined;
@@ -169,7 +179,7 @@ export default class Experiment extends Component {
       case 'choice':
         return <ChoiceElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} />;
       case 'dictator':
-        return <DictatorElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} onNext={this.next}/>;
+        return <DictatorElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} onNext={this.next} direction={direction}/>;
       case 'finished':
         return (
           <div>

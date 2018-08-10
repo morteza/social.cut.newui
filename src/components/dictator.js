@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
-import { Grid, Card, CardContent, Typography, Button } from '@material-ui/core';
+import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar } from '@material-ui/core';
 
 import './experiment.css';
+
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+    padding: 20,
+    height: '100vh',
+    zIndex: 100
+  }
+};
 
 export default class Dictator extends Component {
 
@@ -23,12 +34,18 @@ export default class Dictator extends Component {
 
   render() {
     return (
-      <Grid container direction="column" className="full-height" justify="space-evenly" alignItems="stretch">
+      <Grid container direction="column" justify="space-evenly" alignItems="stretch" style={styles.root}>
         <Grid item>
           <Card>
+            <CardHeader 
+              title="کامبیز"
+              subheader = "۱۵ ساله از اهواز"
+              avatar = {<Avatar aria-label="Male">مرد</Avatar>}
+              classes = {{avatar: 'dictatorRtlAvatar'}}
+              />
             <CardContent>
               <Typography>
-                Opponent
+                Resources
               </Typography>
             </CardContent>
           </Card>
@@ -42,6 +59,12 @@ export default class Dictator extends Component {
         </Grid>
         <Grid item>
           <Card>
+            <CardHeader 
+              title="شقاقل"
+              subheader = "۱۲ ساله از تهران"
+              avatar = {<Avatar aria-label="Female">زن</Avatar>}
+              classes = {{avatar: 'dictatorRtlAvatar'}}
+              />
             <CardContent>
               <Typography>
                 Me
@@ -49,7 +72,7 @@ export default class Dictator extends Component {
             </CardContent>
           </Card>
         </Grid>
-        <Button variant="contained" color="secondary" onClick={this.props.onNext} size="large">Next</Button>
+        {/*<Button variant="contained" color="secondary" onClick={this.props.onNext} size="large">Next</Button>*/}
       </Grid>
     );
   }
