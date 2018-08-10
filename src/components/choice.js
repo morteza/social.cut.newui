@@ -18,6 +18,10 @@ export default class Choice extends Component {
     }
   }
 
+  componentWillUnmount() {
+    console.log("Unmounting choice element");
+  }
+
   componentWillUpdate() {
     if (this.state.value) this.setState({ value: undefined});
   }

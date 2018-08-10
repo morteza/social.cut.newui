@@ -3,13 +3,13 @@ import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar } from 
 
 import './experiment.css';
 
-const styles = {
+var styles = {
   root: {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
     padding: 20,
-    height: '100vh',
+    height: '80vh',
     zIndex: 100
   }
 };
@@ -22,6 +22,29 @@ export default class Dictator extends Component {
     this.state = {
       startedAt: 0 //TODO mountedTime
     }
+  }
+
+  updateDimensions = () => {
+    console.log('resizing...');
+    styles.root.height = (window.innerHeight-50) + 'px';
+  }
+
+  dragListener = e => {
+    console.log('drag is disabled');
+    e.preventDefault();
+  }
+
+  componentDidMount() {
+    window.addEventListener('touchmove', this.dragListener);
+    document.addEventListener('touchmove', this.dragListener, { passive:false });
+    setTimeout(function(){ window.scrollTo(0, 1); }, 0); // to hide address bar on mobile devices
+    window.addEventListener("resize", this.updateDimensions);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('touchmove', this.dragListener);
+    document.removeEventListener('touchmove', this.dragListener, { passive:false });
+
   }
 
   getResponse = () => {
