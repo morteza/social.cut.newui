@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar } from '@material-ui/core';
 
+import { DragDropContainer, DropTarget } from 'react-drag-drop-container';
+
 import './experiment.css';
 
 var styles = {
@@ -14,19 +16,27 @@ var styles = {
   }
 };
 
+let dragger = <div className="dictatorDragger"><img src="img/coin.png"/></div>;
+
 export default class Dictator extends Component {
 
   constructor(props) {
     super(props);
 
     this.state = {
-      startedAt: 0 //TODO mountedTime
+      startedAt: 0, //TODO mountedTime
+      resources: [
+        [...Array(this.props.element.resources).keys()], // player 0
+        [], // player 1
+        []  // player 2
+      ]
     }
+
   }
 
   updateDimensions = () => {
     console.log('resizing...');
-    styles.root.height = (window.innerHeight-50) + 'px';
+    //styles.root.height = (window.innerHeight-50) + 'px';
   }
 
   dragListener = e => {
@@ -49,51 +59,70 @@ export default class Dictator extends Component {
 
   getResponse = () => {
     return {
-      value: 'dictator',
       startedAt: this.state.startedAt,
+      me: this.state.resources[1].length,
+      opponent: this.state.resources[2].length,
       finishedAt: 0 //TODO current time
     };
+  }
+
+  handleDrop = (player, data) => {
+    let {resources} = this.state;
+
+    resources = resources.map(rp => rp.filter(i => i !== data.dragData.resource));
+
+    resources[player].push(data.dragData.resource);
+    this.setState({resources: resources});
+  }
+
+  renderPool = (player) => {
+    var resources = this.state.resources[player];
+
+    return (
+      <Grid item>
+      {resources.length>0 && resources.map(r =>
+      <DragDropContainer targetKey="resources" key={r} dragData={{resource: r}} customDragElement={dragger} zIndex={9999}>
+        <img src="img/coin.png" />
+      </DragDropContainer>
+      )}
+      </Grid>);
   }
 
   render() {
     return (
       <Grid container direction="column" justify="space-evenly" alignItems="stretch" style={styles.root}>
         <Grid item>
-          <Card>
-            <CardHeader 
-              title="کامبیز"
-              subheader = "۱۵ ساله از اهواز"
-              avatar = {<Avatar aria-label="Male">مرد</Avatar>}
-              classes = {{avatar: 'dictatorRtlAvatar'}}
-              />
-            <CardContent>
-              <Typography>
-                Resources
-              </Typography>
-            </CardContent>
-          </Card>
+          <DropTarget targetKey="resources" onHit={(data) => {this.handleDrop(2, data)}} noDragging={true}>
+            <Card>
+              <CardHeader 
+                title="کامبیز"
+                subheader = "۱۵ ساله از اهواز"
+                avatar = {<Avatar aria-label="Male">مرد</Avatar>}
+                classes = {{avatar: 'dictatorRtlAvatar'}}
+                />
+              <CardContent>
+                {this.renderPool(2)}
+              </CardContent>
+            </Card>
+          </DropTarget>
         </Grid>
+        
+        {this.renderPool(0)}
+
         <Grid item>
-          <Card>
-            <CardContent>
-              :-)
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item>
-          <Card>
-            <CardHeader 
-              title="شقاقل"
-              subheader = "۱۲ ساله از تهران"
-              avatar = {<Avatar aria-label="Female">زن</Avatar>}
-              classes = {{avatar: 'dictatorRtlAvatar'}}
-              />
-            <CardContent>
-              <Typography>
-                Me
-              </Typography>
-            </CardContent>
-          </Card>
+          <DropTarget targetKey="resources" onHit={(data) => {this.handleDrop(1, data)}} noDragging={true}>
+            <Card>
+              <CardHeader 
+                title="شقاقل"
+                subheader = "۱۲ ساله از تهران"
+                avatar = {<Avatar aria-label="Female">زن</Avatar>}
+                classes = {{avatar: 'dictatorRtlAvatar'}}
+                />
+              <CardContent>
+                {this.renderPool(1)}
+              </CardContent>
+            </Card>
+          </DropTarget>
         </Grid>
         <Button variant="contained" color="secondary" onClick={this.props.onNext} size="large">TEST next</Button>
       </Grid>
