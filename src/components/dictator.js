@@ -79,36 +79,23 @@ export default class Dictator extends Component {
     var resources = this.state.resources[player];
 
     return (
-      <Grid item>
+      <div>
       {resources.length>0 && resources.map(r =>
-      <DragDropContainer targetKey="resources" key={r} dragData={{resource: r}} customDragElement={dragger} zIndex={9999}>
+      <DragDropContainer targetKey="resources" key={r} dragData={{resource: r}} zIndex={9999}>
         <img src="img/coin.png" />
       </DragDropContainer>
       )}
-      </Grid>);
+      </div>);
   }
 
   render() {
     return (
       <Grid container direction="column" justify="space-evenly" alignItems="stretch" style={styles.root}>
+        
         <Grid item>
-          <DropTarget targetKey="resources" onHit={(data) => {this.handleDrop(2, data)}} noDragging={true}>
-            <Card>
-              <CardHeader 
-                title="کامبیز"
-                subheader = "۱۵ ساله از اهواز"
-                avatar = {<Avatar aria-label="Male">مرد</Avatar>}
-                classes = {{avatar: 'dictatorRtlAvatar'}}
-                />
-              <CardContent>
-                {this.renderPool(2)}
-              </CardContent>
-            </Card>
-          </DropTarget>
+          {this.renderPool(0)}
         </Grid>
         
-        {this.renderPool(0)}
-
         <Grid item>
           <DropTarget targetKey="resources" onHit={(data) => {this.handleDrop(1, data)}} noDragging={true}>
             <Card>
@@ -124,7 +111,27 @@ export default class Dictator extends Component {
             </Card>
           </DropTarget>
         </Grid>
-        <Button variant="contained" color="secondary" onClick={this.props.onNext} size="large">TEST next</Button>
+
+        <Grid item>
+          <DropTarget targetKey="resources" onHit={(data) => {this.handleDrop(2, data)}}>
+            <Card>
+              <CardHeader 
+                title="کامبیز"
+                subheader = "۱۵ ساله از اهواز"
+                avatar = {<Avatar aria-label="Male">مرد</Avatar>}
+                classes = {{avatar: 'dictatorRtlAvatar'}}
+                />
+              <CardContent>
+                {this.renderPool(2)}
+              </CardContent>
+            </Card>
+          </DropTarget>
+        </Grid>
+
+        <Grid item>
+          <Button variant="contained" color="secondary" onClick={this.props.onNext} size="large">TEST NEXT</Button>
+        </Grid>
+              
       </Grid>
     );
   }

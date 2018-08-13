@@ -48,10 +48,10 @@ export default class Experiment extends Component {
       direction: "rtl",
       study: "",
       elements: [
-        {id: 1, type: "choice", content: "This is a test choice", choices: [{value: "Two", label: "Two (2)"},{value: "Four", label: "Four (4)"}]},
-        {id: 2, type: "choice", content: "This is a test choice #2", choices: [{value: "Two", label: "Two (2)"},{value: "Four", label: "Four (4)"}]},
+        {id: 1, type: "choice", content: "جنسیت؟", choices: [{value: "male", label: "پسر"},{value: "female", label: "دختر"}]},
+        {id: 2, type: "choice", content: "یک پرسش آزمایشی؟", choices: [{value: "yes", label: "بلی"},{value: "no", label: "خیر"}]},
         {id: 3, type: "dictator", content: "This is a dictator game", resources: 4},
-        {id: 4, type: "choice", content: "This is a test choice", choices: [{value: "Two", label: "Two (2)"},{value: "Four", label: "Four (4)"}]}
+        {id: 4, type: "choice", content: "یک یا دو؟", choices: [{value: "one", label: "یک"},{value: "two", label: "دو"}]}
       ]
     }
   }
