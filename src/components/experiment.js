@@ -5,7 +5,7 @@ import {API} from '../utils/api';
 
 import ChoiceElement from './choice';
 import StatementElement from './statement';
-import DictatorElement from './dictator';
+import DictatorElement from './dictator/index';
 
 import './experiment.css';
 import axios from 'axios';

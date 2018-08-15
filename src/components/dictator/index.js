@@ -3,20 +3,9 @@ import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar } from 
 
 import { DragDropContainer, DropTarget } from 'react-drag-drop-container';
 
-import './experiment.css';
+import './dictator.css';
 
-var styles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-evenly',
-    padding: 20,
-    height: '80vh',
-    zIndex: 100
-  }
-};
-
-let dragger = <div className="dictatorDragger"><img src="img/coin.png"/></div>;
+let dragger = <div className="dictatorDragger"><img src="img/coin.png" alt="" className="resource" /></div>;
 
 export default class Dictator extends Component {
 
@@ -25,13 +14,14 @@ export default class Dictator extends Component {
 
     this.state = {
       startedAt: 0, //TODO mountedTime
+      trialState: "propose-action",
+      trial: 0,
       resources: [
         [...Array(this.props.element.resources).keys()], // player 0
         [], // player 1
         []  // player 2
       ]
-    }
-
+    };
   }
 
   updateDimensions = () => {
@@ -40,20 +30,20 @@ export default class Dictator extends Component {
   }
 
   dragListener = e => {
-    console.log('drag is disabled');
+    //console.log('drag is disabled');
     e.preventDefault();
   }
 
   componentDidMount() {
-    window.addEventListener('touchmove', this.dragListener);
+    window.addEventListener('touchmove', this.dragListener, { passive:false });
     document.addEventListener('touchmove', this.dragListener, { passive:false });
     setTimeout(function(){ window.scrollTo(0, 1); }, 0); // to hide address bar on mobile devices
-    window.addEventListener("resize", this.updateDimensions);
+    window.addEventListener("resize", this.updateDimensions, { passive:false });
   }
 
   componentWillUnmount() {
     window.removeEventListener('touchmove', this.dragListener);
-    document.removeEventListener('touchmove', this.dragListener, { passive:false });
+    document.removeEventListener('touchmove', this.dragListener);
 
   }
 
@@ -67,12 +57,20 @@ export default class Dictator extends Component {
   }
 
   handleDrop = (player, data) => {
-    let {resources} = this.state;
+    var {resources, trialState} = this.state;
 
     resources = resources.map(rp => rp.filter(i => i !== data.dragData.resource));
 
     resources[player].push(data.dragData.resource);
-    this.setState({resources: resources});
+
+    if (resources[0].length === 0) {
+      trialState = "propose-effect"
+    }
+
+    this.setState({resources: resources, trialState: trialState}, () => {
+      if (this.state.resources[0].length === 0)
+        console.log('all resources are shared and state is updated');
+    });
   }
 
   renderPool = (player) => {
@@ -81,19 +79,32 @@ export default class Dictator extends Component {
     return (
       <div>
       {resources.length>0 && resources.map(r =>
-      <DragDropContainer targetKey="resources" key={r} dragData={{resource: r}} zIndex={9999}>
-        <img src="img/coin.png" />
+      <DragDropContainer targetKey="resources" key={r} dragData={{resource: r}} customDragElement={dragger}>
+        <img src="img/coin.png" alt="" className="resource"/>
       </DragDropContainer>
       )}
       </div>);
   }
 
+  renderSharedPool = trialState => {
+
+    switch(trialState) {
+      case "propose-action": 
+        return this.renderPool(0);
+      case "propose-effect": 
+        return <div>همهٔ سکه‌ها تقسیم شد. در صورت تایید دکمهٔ ادامه را بفشارید.</div>;
+    }
+    return <div></div>;
+  }
+
   render() {
+    let {trialState} = this.state;
+
     return (
-      <Grid container direction="column" justify="space-evenly" alignItems="stretch" style={styles.root}>
+      <Grid container direction="column" justify="space-evenly" alignItems="stretch" className="dictatorBoard">
         
         <Grid item>
-          {this.renderPool(0)}
+          {this.renderSharedPool(trialState)}
         </Grid>
         
         <Grid item>
@@ -101,11 +112,12 @@ export default class Dictator extends Component {
             <Card>
               <CardHeader 
                 title="شقاقل"
-                subheader = "۱۲ ساله از تهران"
+                subheader = "۱۲ ساله"
                 avatar = {<Avatar aria-label="Female">زن</Avatar>}
                 classes = {{avatar: 'dictatorRtlAvatar'}}
+                className = "playerCardHeader"
                 />
-              <CardContent>
+              <CardContent className="playerCardContent">
                 {this.renderPool(1)}
               </CardContent>
             </Card>
@@ -116,12 +128,13 @@ export default class Dictator extends Component {
           <DropTarget targetKey="resources" onHit={(data) => {this.handleDrop(2, data)}}>
             <Card>
               <CardHeader 
-                title="کامبیز"
-                subheader = "۱۵ ساله از اهواز"
+                title="من"
+                subheader = "۱۳ ساله"
                 avatar = {<Avatar aria-label="Male">مرد</Avatar>}
                 classes = {{avatar: 'dictatorRtlAvatar'}}
+                className = "playerCardHeader"
                 />
-              <CardContent>
+              <CardContent className="playerCardContent">
                 {this.renderPool(2)}
               </CardContent>
             </Card>

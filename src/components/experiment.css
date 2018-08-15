@@ -6,12 +6,3 @@
   height: 80vh;
   padding: 0;
 }
-
-.dictatorRtlAvatar {
-  margin-left: 16px;
-  margin-right: 0px !important;
-}
-
-.dictatorDragger {
-  z-index: 9999;
-}

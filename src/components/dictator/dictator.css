@@ -1,0 +1,38 @@
+.dictatorBoard {
+  display: 'flex';
+  flex-wrap: 'wrap';
+  justify-content: 'space-evenly';
+  padding: 20px;
+  min-height: 80vh;
+  max-height: 95vh;
+  z-index: 100;
+  touch-action: none;
+}
+
+
+.dictatorRtlAvatar {
+  margin-left: 16px;
+  margin-right: 0px !important;
+}
+
+.dictatorDragger {
+  z-index: 9999;
+}
+
+.resource {
+  width: 50px;
+  height: auto;
+  padding-left: 5px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+
+.playerCardHeader {
+  padding-bottom: 0px !important;
+}
+
+.playerCardContent {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  min-height: 16px;
+}
