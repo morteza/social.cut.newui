@@ -101,7 +101,7 @@ export default class Dictator extends Component {
     let {trialState} = this.state;
 
     return (
-      <Grid container direction="column" justify="space-evenly" alignItems="stretch" className="dictatorBoard">
+      <Grid container direction="column" justify="space-between" alignItems="stretch" className="dictatorBoard">
         
         <Grid item>
           {this.renderSharedPool(trialState)}
@@ -112,8 +112,7 @@ export default class Dictator extends Component {
             <Card>
               <CardHeader 
                 title="شقاقل"
-                subheader = "۱۲ ساله"
-                avatar = {<Avatar aria-label="Female">زن</Avatar>}
+                avatar = {<Avatar aria-label="Female" classes={{colorDefault: 'avatar'}}>زن</Avatar>}
                 classes = {{avatar: 'dictatorRtlAvatar'}}
                 className = "playerCardHeader"
                 />
@@ -129,8 +128,7 @@ export default class Dictator extends Component {
             <Card>
               <CardHeader 
                 title="من"
-                subheader = "۱۳ ساله"
-                avatar = {<Avatar aria-label="Male">مرد</Avatar>}
+                avatar = {<Avatar aria-label="Male" classes={{colorDefault: 'avatar'}}>مرد</Avatar>}
                 classes = {{avatar: 'dictatorRtlAvatar'}}
                 className = "playerCardHeader"
                 />

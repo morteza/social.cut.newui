@@ -1,7 +1,7 @@
 .dictatorBoard {
   display: 'flex';
   flex-wrap: 'wrap';
-  justify-content: 'space-evenly';
+  justify-content: 'space-between' !important;
   padding: 20px;
   min-height: 80vh;
   max-height: 95vh;
@@ -9,6 +9,10 @@
   touch-action: none;
 }
 
+.avatar {
+  margin-left: 0px !important;
+  border-radius: 0% !important;
+}
 
 .dictatorRtlAvatar {
   margin-left: 16px;
@@ -28,11 +32,13 @@
 }
 
 .playerCardHeader {
-  padding-bottom: 0px !important;
+  align-items: flex-start !important;
+  padding: 0px !important;
 }
 
 .playerCardContent {
-  padding-top: 0px !important;
-  padding-bottom: 0px !important;
+  padding: 0px !important;
   min-height: 16px;
+  padding-left: 8px !important;
+  padding-right: 8px !important;
 }

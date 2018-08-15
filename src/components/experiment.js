@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Grid, CircularProgress, Button, MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+import {Grid, CircularProgress, Button, MuiThemeProvider, createMuiTheme, LinearProgress } from '@material-ui/core';
 
 import {API} from '../utils/api';
 
@@ -37,6 +37,8 @@ export default class Experiment extends Component {
       email: undefined,
       sessionTrackingCode: undefined,
       direction: 'ltr',
+      progress: 0,
+      showProgress: true,
       theme:  createMuiTheme({palette: {}})
     }
   }
@@ -83,7 +85,8 @@ export default class Experiment extends Component {
           elements: res.data.elements,
           current: {...res.data.elements[0], index: 0},
           direction: res.data.direction || 'ltr',
-          theme: createMuiTheme({palette: {direction: res.data.direction}})
+          theme: createMuiTheme({palette: {direction: res.data.direction}}),
+          progress: 0
         });
       }); 
   }
@@ -112,13 +115,14 @@ export default class Experiment extends Component {
     if (current.index<elements.length){
       var newElement = this.state.elements[current.index];
       newElement.index = current.index;
+      let progress = 100 * current.index / this.state.elements.length;
       this.setState(
-        {responses: [...this.state.responses, elementResponse], current: newElement},
+        {progress: progress,responses: [...this.state.responses, elementResponse], current: newElement},
         () => {} //nothing to do (e.g., set loading?)
       );
     } else
       this.setState(
-        {responses: [...this.state.responses, elementResponse], current: {type: 'finished'}},
+        {progress: 100, responses: [...this.state.responses, elementResponse], current: {type: 'finished'}},
         () => {this.finish()}
       );
   }
@@ -139,7 +143,7 @@ export default class Experiment extends Component {
   }
 
   render() {
-    let {loaded, current, direction, theme} = this.state;
+    let {loaded, current, direction, showProgress, theme} = this.state;
 
     if (loaded === undefined) {
       return (
@@ -153,6 +157,9 @@ export default class Experiment extends Component {
 
     return (
       <MuiThemeProvider theme={theme}><div dir={direction}>
+      {showProgress &&
+        <LinearProgress variant="determinate" value={this.state.progress} />
+      }
       <Grid container justify="flex-start" alignItems="center" direction="column" style={styles.root}>
         
         {current && this.renderElement(current, direction)}
