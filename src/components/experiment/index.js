@@ -66,13 +66,21 @@ export default class Experiment extends Component {
 
     if (this.state.code === 'dictator') {
       var content = this.testContent();
+
+      let theme = createMuiTheme({
+        palette: {direction: content.direction || 'ltr'},
+        typography: {
+          fontFamily: ['Samim', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
+        }
+      });
+
       this.setState({
         content: content, 
         loaded: true, 
         elements: content.elements, 
         current: {...content.elements[0], index: 0},
         direction:  content.direction || 'ltr',
-        theme: createMuiTheme({palette: {direction: content.direction}})
+        theme: theme
       });
       return;
     }
@@ -80,13 +88,21 @@ export default class Experiment extends Component {
     //TODO fetch experiment json
     API.getExperimentContent(this.state.code)
       .then(res => {
+
+        let theme = createMuiTheme({
+          palette: {direction: res.data.direction || 'ltr'},
+          typography: {
+            fontFamily: ['Samim', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
+          }
+        });
+
         this.setState({
           content: res.data, 
           loaded: true, 
           elements: res.data.elements,
           current: {...res.data.elements[0], index: 0},
           direction: res.data.direction || 'ltr',
-          theme: createMuiTheme({palette: {direction: res.data.direction}}),
+          theme: theme,
           progress: 0
         });
       })
