@@ -10,12 +10,8 @@ const styles = {
 
 export default class Statement extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      startedAt: 0 //TODO mountedTime
-    }
+  state = {
+    startedAt: 0 //TODO mountedTime
   }
 
   getResponse = () => {

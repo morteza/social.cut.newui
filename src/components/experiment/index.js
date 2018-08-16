@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import {Grid, CircularProgress, Button, MuiThemeProvider, createMuiTheme, LinearProgress } from '@material-ui/core';
 
-import {API} from '../utils/api';
+import {API} from '../../utils/api';
 
-import ChoiceElement from './choice';
-import StatementElement from './statement';
-import DictatorElement from './dictator/index';
+import ChoiceElement from '../choice';
+import StatementElement from '../statement';
+import DictatorElement from '../dictator';
 
 import './experiment.css';
 import axios from 'axios';
@@ -22,27 +22,23 @@ const styles = {
 
 export default class Experiment extends Component {
 
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-      loaded: undefined,
-      code: this.props.location.hash.substring(1),
-      content: undefined,
-      elements: undefined,
-      current: undefined,
-      responses: [],
-      submitted: undefined,
-      ip: undefined,
-      email: undefined,
-      sessionTrackingCode: undefined,
-      direction: 'ltr',
-      progress: 0,
-      showProgress: true,
-      theme:  createMuiTheme({palette: {}})
-    }
+  state = {
+    loaded: undefined,
+    code: this.props.location.hash.substring(1),
+    content: undefined,
+    elements: undefined,
+    current: undefined,
+    responses: [],
+    submitted: undefined,
+    ip: undefined,
+    email: undefined,
+    sessionTrackingCode: undefined,
+    direction: 'ltr',
+    progress: 0,
+    showProgress: true,
+    theme:  createMuiTheme({palette: {}})
   }
-
+  
   testContent = () => {
     return {
       title: "",
@@ -187,7 +183,7 @@ export default class Experiment extends Component {
       case 'choice':
         return <ChoiceElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} />;
       case 'dictator':
-        return <DictatorElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} onNext={this.next} direction={direction}/>;
+        return <DictatorElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} onNext={this.next} direction={direction} />;
       case 'finished':
         return (
           <div>

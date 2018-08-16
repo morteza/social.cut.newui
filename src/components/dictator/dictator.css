@@ -12,6 +12,9 @@
 .avatar {
   margin-left: 0px !important;
   border-radius: 0% !important;
+  border-bottom-left-radius: 10% !important;
+  height: 50px !important;
+  width: 50px !important;
 }
 
 .dictatorRtlAvatar {

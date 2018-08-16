@@ -11,11 +11,8 @@ const styles = {
 
 export default class Choice extends Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: undefined
-    }
+  state = {
+    value: undefined
   }
 
   componentWillUnmount() {

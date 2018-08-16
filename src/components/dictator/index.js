@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar } from '@material-ui/core';
+import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar, LinearProgress } from '@material-ui/core';
 
 import { DragDropContainer, DropTarget } from 'react-drag-drop-container';
 
@@ -9,19 +9,15 @@ let dragger = <div className="dictatorDragger"><img src="img/coin.png" alt="" cl
 
 export default class Dictator extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      startedAt: 0, //TODO mountedTime
-      trialState: "propose-action",
-      trial: 0,
-      resources: [
-        [...Array(this.props.element.resources).keys()], // player 0
-        [], // player 1
-        []  // player 2
-      ]
-    };
+  state = {
+    startedAt: 0, //TODO mountedTime
+    trialState: "propose-action",
+    trial: 0,
+    resources: [
+      [...Array(this.props.element.resources).keys()], // player 0
+      [], // player 1
+      []  // player 2
+    ]
   }
 
   updateDimensions = () => {
@@ -101,6 +97,9 @@ export default class Dictator extends Component {
     let {trialState} = this.state;
 
     return (
+      <React.Fragment>
+      <LinearProgress color="secondary" variant="determinate" value={40} style={{width: '100%'}}/>
+
       <Grid container direction="column" justify="space-between" alignItems="stretch" className="dictatorBoard">
         
         <Grid item>
@@ -115,6 +114,7 @@ export default class Dictator extends Component {
                 avatar = {<Avatar aria-label="Female" classes={{colorDefault: 'avatar'}}>زن</Avatar>}
                 classes = {{avatar: 'dictatorRtlAvatar'}}
                 className = "playerCardHeader"
+                subheader = "زن، ۱۲ ساله"
                 />
               <CardContent className="playerCardContent">
                 {this.renderPool(1)}
@@ -131,6 +131,7 @@ export default class Dictator extends Component {
                 avatar = {<Avatar aria-label="Male" classes={{colorDefault: 'avatar'}}>مرد</Avatar>}
                 classes = {{avatar: 'dictatorRtlAvatar'}}
                 className = "playerCardHeader"
+                subheader = "مرد، ۱۳ ساله"
                 />
               <CardContent className="playerCardContent">
                 {this.renderPool(2)}
@@ -144,6 +145,7 @@ export default class Dictator extends Component {
         </Grid>
               
       </Grid>
+      </React.Fragment>
     );
   }
 }
