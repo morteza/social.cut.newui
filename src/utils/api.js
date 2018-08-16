@@ -10,6 +10,14 @@ export function createAPI() {
       Authorization: 'Bearer ' + cookie.load('cutJwtToken')
     }
   });
+
+  API.getIp = () => {
+    return axios.get('https://jsonip.com/');
+  };
+
+  API.getExperimentContent = (code) => {
+    return API.get(`/experiments/${code}/content`);
+  }
   return API;
 }
 

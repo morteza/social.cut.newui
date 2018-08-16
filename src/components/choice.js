@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 
 import { RadioGroup, Radio, FormControlLabel, Grid } from '@material-ui/core';
 
-const styles = {
-  root: {
-    padding: 20,
-    flexGrow: 1
-  }
-};
-
 export default class Choice extends Component {
 
   state = {
-    value: undefined
+    value: undefined,
+    styles: {
+      root: {
+        padding: 20,
+        flexGrow: 1
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -34,6 +33,7 @@ export default class Choice extends Component {
   }
 
   render() {
+    let {styles} = this.state;
     return (
       <Grid container style={styles.root} direction="column">
         <Grid item>

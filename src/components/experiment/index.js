@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Grid, CircularProgress, Button, MuiThemeProvider, createMuiTheme, LinearProgress } from '@material-ui/core';
+import {Grid, CircularProgress, Button, MuiThemeProvider, createMuiTheme, LinearProgress, Dialog, DialogContent, DialogTitle, DialogContentText } from '@material-ui/core';
 
 import {API} from '../../utils/api';
 
@@ -10,15 +10,21 @@ import DictatorElement from '../dictator';
 import './experiment.css';
 import axios from 'axios';
 
-const styles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-evenly',
-    padding: 0,
-    zIndex: 100
-  }
-};
+let Loading = () => {
+    return (<Grid container justify="center" alignItems="center" classes={{container: "loading-grid"}}>
+      <br />
+      <CircularProgress />
+    </Grid>
+  )};
+
+let FailedToLoad = () => {
+  return (<Dialog
+  open={true}
+  aria-labelledby="cannot-load-title"
+  aria-describedby="alert-dialog-description">
+  <DialogTitle id="cannot-load-title">Cannot load the experiment.</DialogTitle>
+</Dialog>);
+}
 
 export default class Experiment extends Component {
 
@@ -56,8 +62,7 @@ export default class Experiment extends Component {
 
   componentDidMount(){
 
-    axios.get('https://jsonip.com/')
-      .then(res => {this.setState({ip: res.data.ip})});
+    API.getIp().then(res => {this.setState({ip: res.data.ip})});
 
     if (this.state.code === 'dictator') {
       var content = this.testContent();
@@ -69,11 +74,11 @@ export default class Experiment extends Component {
         direction:  content.direction || 'ltr',
         theme: createMuiTheme({palette: {direction: content.direction}})
       });
-        return ;
+      return;
     }
 
     //TODO fetch experiment json
-    API.get(`/experiments/${this.state.code}/content`)
+    API.getExperimentContent(this.state.code)
       .then(res => {
         this.setState({
           content: res.data, 
@@ -84,6 +89,9 @@ export default class Experiment extends Component {
           theme: createMuiTheme({palette: {direction: res.data.direction}}),
           progress: 0
         });
+      })
+      .catch(error => {
+        this.setState({loaded: false});
       }); 
   }
 
@@ -141,14 +149,10 @@ export default class Experiment extends Component {
   render() {
     let {loaded, current, direction, showProgress, theme} = this.state;
 
-    if (loaded === undefined) {
-      return (
-        <Grid container justify="center" alignItems="center" classes={{container: "loading-grid"}}>
-          <br />
-          <CircularProgress />
-        </Grid>);
-    } else if (loaded === false) {
-      return <div>Cannot load experiment</div>;
+    if (loaded === undefined) 
+      return <Loading />;
+    else if (loaded === false) {
+      return <FailedToLoad />;
     }
 
     return (
@@ -156,7 +160,7 @@ export default class Experiment extends Component {
       {showProgress &&
         <LinearProgress variant="determinate" value={this.state.progress} />
       }
-      <Grid container justify="flex-start" alignItems="center" direction="column" style={styles.root}>
+      <Grid container justify="flex-start" alignItems="center" direction="column">
         
         {current && this.renderElement(current, direction)}
         
