@@ -10,9 +10,12 @@ let dragger = <div className="dictatorDragger"><img src="img/coin.png" alt="" cl
 export default class Dictator extends Component {
 
   state = {
-    startedAt: 0, //TODO mountedTime
+    startedAt: Date.now(), //TODO mountedTime
     trialState: "propose-action",
     trial: 0,
+    messages: {
+      pressNext: 'همهٔ سکه‌ها تقسیم شد. حالا دکمهٔ ادامه را بفشارید.'
+    },
     resources: [
       [...Array(this.props.element.resources).keys()], // player 0
       [], // player 1
@@ -88,7 +91,11 @@ export default class Dictator extends Component {
       case "propose-action": 
         return this.renderPool(0);
       case "propose-effect": 
-        return <div>همهٔ سکه‌ها تقسیم شد. در صورت تایید دکمهٔ ادامه را بفشارید.</div>;
+        return <div>
+          {this.state.messages.pressNext}
+          <br />
+          <Button variant="contained" color="secondary" onClick={this.props.onNext}>ادامه</Button>
+        </div>;
     }
     return <div></div>;
   }
@@ -138,10 +145,6 @@ export default class Dictator extends Component {
               </CardContent>
             </Card>
           </DropTarget>
-        </Grid>
-
-        <Grid item>
-          <Button variant="contained" color="secondary" onClick={this.props.onNext} size="large">TEST NEXT</Button>
         </Grid>
               
       </Grid>
