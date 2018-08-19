@@ -28,7 +28,7 @@ export default class Choice extends Component {
 
   getResponse = () => {
     return {
-      value: this.state.value
+      value: this.state.value || null
     };
   }
 

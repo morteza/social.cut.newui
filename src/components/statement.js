@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Grid } from '@material-ui/core';
+
+import CutElement from './element';
 
 const styles = {
   root: {
@@ -8,17 +10,25 @@ const styles = {
   }
 };
 
-export default class Statement extends Component {
+export default class Statement extends CutElement {
 
   state = {
-    startedAt: 0 //TODO mountedTime
+    startedAt: 0
+  }
+
+  componentDidMount() {
+    let t = Date.now();
+    this.setState({startedAt: t});
   }
 
   getResponse = () => {
+
+    let t = Date.now();
+
     return {
       value: 'read',
       startedAt: this.state.startedAt,
-      finishedAt: 0 //TODO current time
+      finishedAt: t
     };
   }
 
