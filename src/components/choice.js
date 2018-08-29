@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import { RadioGroup, Radio, FormControlLabel, Grid } from '@material-ui/core';
 
-export default class Choice extends Component {
+import CutElement from './element';
+
+export default class Choice extends CutElement {
 
   state = {
     value: undefined,
@@ -14,22 +16,37 @@ export default class Choice extends Component {
     }
   }
 
-  componentWillUnmount() {
-    console.log("Unmounting choice element");
+  reset() {
+    this.setState({ value: undefined});
   }
 
-  componentWillUpdate() {
-    if (this.state.value) this.setState({ value: undefined});
+  componentWillUnmount() {
+    console.log("Unmounting choice element");
   }
 
   handleChange = event => {
     this.setState({ value: event.target.value });
   }
 
+
+  reset = () => {
+    this.setState({value: undefined});
+  }
+
   getResponse = () => {
+    let required = this.props.element.required || false;
+    let value = this.state.value;
+    if (required && !value) {
+      let msg = this.props.messages.required || 'You must answer to proceed.';
+      throw new Error(msg);
+    }
+
+    this.reset();
+
     return {
-      value: this.state.value || null
+      value: value || null
     };
+
   }
 
   render() {

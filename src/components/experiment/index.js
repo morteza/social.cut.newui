@@ -6,24 +6,56 @@ import {API} from '../../utils/api';
 import ChoiceElement from '../choice';
 import StatementElement from '../statement';
 import DictatorElement from '../dictator';
+import TextualDictatorElement from '../textual-dictator';
+import TextElement from '../text';
+
+import demoDictatorContent from '../../demos/dictator.json';
 
 import './experiment.css';
 
-let Loading = () => {
-    return (<Grid container justify="center" alignItems="center" classes={{container: "loading-grid"}}>
-      <br />
-      <CircularProgress />
-    </Grid>
-  )};
-
-let FailedToLoad = () => {
-  return (<Dialog
-  open={true}
-  aria-labelledby="cannot-load-title"
-  aria-describedby="alert-dialog-description">
-  <DialogTitle id="cannot-load-title">Cannot load the experiment.</DialogTitle>
-</Dialog>);
+function NotificationBar(props) {
+  let {message, direction, onHide} = props;
+  direction = direction || "ltr";
+  return (
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: direction==="rtl"?'right':'left',
+      }}
+      open={message !== undefined}
+      autoHideDuration={5000}
+      onClose = {onHide}
+      ContentProps={{
+        'aria-describedby': 'message-id',
+      }}
+      message={<span id="message-id">{message}</span>}/>
+  );
 }
+
+function Loading(loaded = undefined) {
+
+  // Still loading
+  if (loaded === undefined)
+    return (
+      <Grid container justify="center" alignItems="center" classes={{container: "loading-grid"}}>
+        <br />
+        <CircularProgress />
+      </Grid>
+    );
+
+  // Failed to load
+  if (loaded === false) 
+    return (
+      <Dialog
+        open={true}
+        aria-labelledby="cannot-load-title"
+        aria-describedby="alert-dialog-description">
+        <DialogTitle id="cannot-load-title">Cannot load the experiment.</DialogTitle>
+      </Dialog>
+    );
+
+  return null;
+};
 
 export default class Experiment extends Component {
 
@@ -42,26 +74,8 @@ export default class Experiment extends Component {
     direction: 'ltr',
     progress: 0,
     showProgress: true,
-    snackMessage: undefined, // if not undefined snackbar will be shown for 5 seconds
+    notification: undefined, // if not undefined notification bar will be shown for 5 seconds
     theme:  createMuiTheme({palette: {}})
-  }
-  
-  testContent = () => {
-    return {
-      title: "",
-      description:"",
-      direction: "rtl",
-      study: "",
-      messages: {
-        required: "برای ادامه باید به این پرسش پاسخ دهید."
-      },
-      elements: [
-        {id: 1, type: "statement", content: "جنسیت؟"},
-        {id: 2, type: "choice", isRequired: true, content: "یک پرسش آزمایشی؟", choices: [{value: "yes", label: "بلی"},{value: "no", label: "خیر"}]},
-        {id: 3, type: "dictator", content: "This is a dictator game", resources: 4},
-        {id: 4, type: "choice", content: "یک یا دو؟", choices: [{value: "one", label: "یک"},{value: "two", label: "دو"}]}
-      ]
-    }
   }
 
   componentDidMount(){
@@ -69,20 +83,18 @@ export default class Experiment extends Component {
     API.getIp().then(res => {this.setState({ip: res.data.ip})});
 
     if (this.state.code === 'dictator') {
-      var content = this.testContent();
-
       let theme = createMuiTheme({
-        palette: {direction: content.direction || 'ltr'},
+        palette: {direction: demoDictatorContent.direction || 'ltr'},
         typography: {
           fontFamily: ['Samim', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
         }
       });
 
       this.setState({
-        content: content, 
+        content: demoDictatorContent, 
         loaded: true, 
-        current: {...content.elements[0], index: 0},
-        direction:  content.direction || 'ltr',
+        current: {...demoDictatorContent.elements[0], index: 0},
+        direction:  demoDictatorContent.direction || 'ltr',
         theme: theme
       });
       return;
@@ -117,56 +129,29 @@ export default class Experiment extends Component {
     let typ = undefined;
     if (element && element.type) typ = element.type;
 
-    let interactiveElements = ['ultimatum', 'dictator', 'gonogo', 'temporal-discounting', 'bart', 'finished'];
+    let interactiveElements = ['ultimatum', 'textual-dictator', 'dictator', 'gonogo', 'temporal-discounting', 'bart', 'finished'];
 
     if (interactiveElements.includes(typ)) 
       return false;
     return true;
   }
 
-
-  preventIfRequired = (element, response) => {
-    let isRequired = element.isRequired || false;
-    let value = response.value;
-    if (isRequired && !value) {
-      //show snack
-      let message = this.state.content.messages.required || 'You must answer to proceed.';
-      this.setState({snackMessage: message})
-      return true;
-    }
-    return false;
-  }
-
-  hideSnack = () => {
-    this.setState({snackMessage: undefined});
-  }
-
-  renderSnack = () => {
-    let direction = this.state.content.direction || "ltr";
-    return (
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: direction==="rtl"?'right':'left',
-        }}
-        open={this.state.snackMessage !== undefined}
-        autoHideDuration={5000}
-        onClose = {this.hideSnack}
-        ContentProps={{
-          'aria-describedby': 'message-id',
-        }}
-        message={<span id="message-id">{this.state.snackMessage}</span>}/>
-    );
+  hideNotification = () => {
+    this.setState({notification: undefined});
   }
 
   onNext = () => {
     var {current, content} = this.state;
     //store
     
-    var elementResponse = this.getElementResponse();
-
-    if (this.preventIfRequired(current, elementResponse))
+    var elementResponse;
+    try {
+      elementResponse = this.getElementResponse();
+    } catch (err) {
+      this.setState({notification: err.message});
       return;
+    }
+
 
     elementResponse.index = current.index;
     elementResponse.type = current.type;
@@ -189,36 +174,38 @@ export default class Experiment extends Component {
   }
 
   finish = () => {
+    //TODO create random subjectId or read from cookie
     var subjectId = "037eb7bb-c883-40df-bab5-2537cd1e06bf";
     var url = "https://kitten.cut.social/api/v7/sessions/" + this.state.code + "/save/" + subjectId;
 
     var result = {
       ip: this.state.ip,
+      subjectId: subjectId,
       responses: this.state.responses
     }
 
     API.post(url, result)
       .then(res => {this.setState({sessionTrackingCode: res.data.code})});
 
-    console.log("RESPONSE: ", this.state.responses)
+    console.log("FINISHED AND SUBMITTED");
   }
 
   render() {
     let {loaded, current, direction, showProgress, theme} = this.state;
 
-    if (loaded === undefined) 
+    if (!loaded) 
       return <Loading />;
-    else if (loaded === false) {
-      return <FailedToLoad />;
-    }
 
     return (
       <MuiThemeProvider theme={theme}><div dir={direction}>
       {showProgress &&
         <LinearProgress variant="determinate" value={this.state.progress} />
       }
-      {this.state.snackMessage && 
-        this.renderSnack()
+      {this.state.notification && 
+        <NotificationBar 
+          message={this.state.notification} 
+          direction={this.state.content.direction} 
+          onHide={this.hideNotification} />
       }
       <Grid container justify="flex-start" alignItems="center" direction="column">
         
@@ -237,17 +224,21 @@ export default class Experiment extends Component {
 
   renderElement = (element, direction) => {
 
-    let {responses, ip, timezoneOffset} = this.state;
+    let {responses, ip, timezoneOffset, content} = this.state;
     let typ = undefined;
     if (element && element.type) typ = element.type;
 
     switch (typ) {
       case 'statement':
-        return <StatementElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} />;
+        return <StatementElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} messages={content.messages} />;
       case 'choice':
-        return <ChoiceElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} />;
+        return <ChoiceElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} messages={content.messages} />;
+      case 'textual-dictator':
+        return <TextualDictatorElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} onNext={this.onNext} direction={direction} messages={content.messages} />;
       case 'dictator':
-        return <DictatorElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} onNext={this.onNext} direction={direction} />;
+        return <DictatorElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} onNext={this.onNext} direction={direction} messages={content.messages} />;
+      case 'text':
+        return <TextElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} direction={direction} messages={content.messages} />;
       case 'finished':
         return (
           <div>

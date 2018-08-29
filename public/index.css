@@ -17,3 +17,9 @@ body {
   padding: 0;
   font-family: 'Samim', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
+
+.rtl-text-field > label, .rtl-text-field > #value-helper-text {
+  left: auto !important;
+  transform-origin: top right !important;
+  text-align: right !important;
+}

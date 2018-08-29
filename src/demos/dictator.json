@@ -1,0 +1,105 @@
+{
+  "title": "",
+  "description": "",
+  "direction": "rtl",
+  "study": "",
+  "messages": {
+    "required": "برای ادامه باید به این پرسش پاسخ دهید."
+  },
+  "elements": [
+    {
+      "id": 3,
+      "type": "text",
+      "required": true,
+      "content": "چند ساله هستید؟",
+      "placeholder": "سن",
+      "help": "سن خود را به عدد وارد کنید، مثلاً 13 یا ۱۳."
+    },
+    {
+      "id": 1,
+      "type": "statement",
+      "content": "لطفا"
+    },
+    {
+      "id": 2,
+      "type": "choice",
+      "required": true,
+      "content": "لطفاً جنسیت خود را مشخص نمایید.",
+      "choices": [
+        {
+          "value": "male",
+          "label": "پسر"
+        },
+        {
+          "value": "female",
+          "label": "دختر"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "text",
+      "required": true,
+      "content": "چند ساله هستید؟",
+      "placeholder": "سن",
+      "help": "سن خود را به عدد وارد کنید، مثلاً 13 یا ۱۳."
+    },
+    {
+      "id": 4,
+      "type": "text",
+      "required": true,
+      "content": "در چه مقطعی در حال تحصیل هستید؟",
+      "placeholder": "مقطع تحصیلی",
+      "help": "مثلاً هفتم یا هشتم."
+
+    },
+    {
+      "id": 2,
+      "type": "choice",
+      "required": true,
+      "content": "یک پرسش آزمایشی؟",
+      "choices": [
+        {
+          "value": "yes",
+          "label": "بلی"
+        },
+        {
+          "value": "no",
+          "label": "خیر"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "textual-dictator",
+      "content": "This is a dictator game",
+      "resources": 4
+    },
+    {
+      "id": 4,
+      "type": "choice",
+      "content": "جنسیت بازیکن مقابل شما چه بود؟",
+      "choices": [
+        {
+          "value": "male",
+          "label": "مرد"
+        },
+        {
+          "value": "female",
+          "label": "زن"
+        },
+        {
+          "value": "forgot",
+          "label": "فراموش کردم"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "text",
+      "placeholder": "نام رقیب",
+      "content": "نام بازیکن رقیب شما چه بود؟",
+      "help": "در صورتی که نام او را به خاطر نمی‌آورید، می‌توانید این بخش را خالی بگذارید."
+    }
+  ]
+}
