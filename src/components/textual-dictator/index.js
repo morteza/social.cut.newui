@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar, LinearProgress } from '@material-ui/core';
+import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar, LinearProgress, CardActions } from '@material-ui/core';
 
 import { DragDropContainer, DropTarget } from 'react-drag-drop-container';
 
@@ -11,9 +11,19 @@ export default class TextualDictator extends Component {
     startedAt: Date.now(), //TODO mountedTime
     trialState: "propose-action",
     trial: 0,
+    trials: this.props.element.trials,
+    opponent: this.props.element.personas[Math.floor(Math.random() * this.props.element.personas.length)],
+    actions: [],
+    me: {
+      avatar: "مرد",
+      description: "متن تستی",
+      age: "۱۳",
+      title: "من"
+    },
     messages: {
       pressNext: 'همهٔ سکه‌ها تقسیم شد. حالا دکمهٔ ادامه را بفشارید.'
     },
+    currentPersona: {},
     resources: [
       [...Array(this.props.element.resources).keys()], // player 0
       [], // player 1
@@ -47,103 +57,87 @@ export default class TextualDictator extends Component {
   getResponse = () => {
     return {
       startedAt: this.state.startedAt,
-      me: this.state.resources[1].length,
-      opponent: this.state.resources[2].length,
-      finishedAt: 0 //TODO current time
+      //me: this.state.resources[1].length,
+      //opponent: this.state.resources[2].length,
+      finishedAt: Date.now(), //TODO last click time
+      actions: this.state.actions
     };
   }
 
-  handleDrop = (player, data) => {
-    var {resources, trialState} = this.state;
-
-    resources = resources.map(rp => rp.filter(i => i !== data.dragData.resource));
-
-    resources[player].push(data.dragData.resource);
-
-    if (resources[0].length === 0) {
-      trialState = "propose-effect"
-    }
-
-    this.setState({resources: resources, trialState: trialState}, () => {
-      if (this.state.resources[0].length === 0)
-        console.log('all resources are shared and state is updated');
+  nextTrial = (response = "") => {
+    var {trial, trials} = this.state;
+    let newOpponent = this.props.element.personas[Math.floor(Math.random() * this.props.element.personas.length)];
+    let actionToSave = {trial: trial, opponent: this.state.opponent, response: response};
+    
+    trial++;
+    this.setState({
+      trial: trial,
+      opponent: newOpponent,
+      actions: [...this.state.actions, actionToSave]
+    }, () => {
+      if (trial >= trials) this.props.onNext();
     });
-  }
 
-  renderPool = (player) => {
-    var resources = this.state.resources[player];
 
-    return (
-      <div>
-      {resources.length>0 && resources.map(r =>
-      <DragDropContainer targetKey="resources" key={r} dragData={{resource: r}}>
-        <img src="img/coin.png" alt="" className="resource"/>
-      </DragDropContainer>
-      )}
-      </div>);
-  }
-
-  renderSharedPool = trialState => {
-
-    switch(trialState) {
-      case "propose-action": 
-        return this.renderPool(0);
-      case "propose-effect": 
-        return <div>
-          {this.state.messages.pressNext}
-          <br />
-          <Button variant="contained" color="secondary" onClick={this.props.onNext}>ادامه</Button>
-        </div>;
-    }
-    return <div></div>;
   }
 
   render() {
-    let {trialState} = this.state;
+    let {trialState, opponent, me, trial, trials} = this.state;
+    let progress = 100 * trial/trials;
 
     return (
       <React.Fragment>
-        Test
-      <LinearProgress color="secondary" variant="determinate" value={40} style={{width: '100%'}}/>
+      <LinearProgress color="secondary" variant="determinate" value={progress} style={{width: '100%'}}/>
 
       <Grid container direction="column" justify="space-between" alignItems="stretch" className="dictatorBoard">
         
         <Grid item>
-          {this.renderSharedPool(trialState)}
+        شما برای تقسیم مقداری پول باید تصمیم بگیرید. برای تقسیم آن دو انتخاب دارید:
+            <br /><ul><li>
+         به شرکت کنندهٔ مقابل ۱۰ هزار تومان دهید و خودتان چیزی برندارید.
+                 </li><li>
+         به شرکت‌کنندهٔ مقابل چیزی ندهید و ۵ هزار تومان برای خودتان بردارید.
+        </li>
+        </ul>
         </Grid>
         
         <Grid item>
-          <DropTarget targetKey="resources" onHit={(data) => {this.handleDrop(1, data)}} noDragging={true}>
             <Card>
               <CardHeader 
-                title="شقاقل"
-                avatar = {<Avatar aria-label="Female" classes={{colorDefault: 'avatar'}}>زن</Avatar>}
+                title={opponent.title}
+                avatar = {<Avatar aria-label="Opponent Avatar" classes={{colorDefault: 'avatar'}}>{opponent.avatar}</Avatar>}
                 classes = {{avatar: 'dictatorRtlAvatar'}}
                 className = "playerCardHeader"
-                subheader = "زن، ۱۲ ساله"
+                subheader = {opponent.description}
                 />
               <CardContent className="playerCardContent">
-                {this.renderPool(1)}
               </CardContent>
+              <CardActions>
+                <Grid container alignItems="center" direction="column">
+                <Grid item>
+                <Button color="primary" onClick={() => this.nextTrial('opponent')}>۱۰ هزار تومان</Button></Grid>
+                </Grid>
+              </CardActions>
             </Card>
-          </DropTarget>
         </Grid>
 
         <Grid item>
-          <DropTarget targetKey="resources" onHit={(data) => {this.handleDrop(2, data)}}>
             <Card>
               <CardHeader 
-                title="من"
-                avatar = {<Avatar aria-label="Male" classes={{colorDefault: 'avatar'}}>مرد</Avatar>}
+                title={me.title}
+                avatar = {<Avatar aria-label="My Avatar" classes={{colorDefault: 'avatar'}}>{me.avatar}</Avatar>}
                 classes = {{avatar: 'dictatorRtlAvatar'}}
                 className = "playerCardHeader"
-                subheader = "مرد، ۱۳ ساله"
+                subheader = {me.description}
                 />
-              <CardContent className="playerCardContent">
-                {this.renderPool(2)}
+              <CardContent className="playerCardContent">     
               </CardContent>
+              <CardActions>
+                <Grid container alignItems="center" direction="column">
+                <Grid item><Button color="primary" onClick={() => this.nextTrial('self')}>۵ هزار تومان</Button></Grid>
+                </Grid>
+              </CardActions>
             </Card>
-          </DropTarget>
         </Grid>
               
       </Grid>

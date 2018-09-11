@@ -28,7 +28,7 @@ export default class Text extends CutElement {
   getResponse = () => {
     let required = this.props.element.required || false;
     let value = this.state.value;
-    if (required && (!value || value.trim().length==0)) {
+    if (required && (!value || value.trim().length===0)) {
       let msg = this.props.messages.required || 'You must answer to proceed.';
       throw new Error(msg);
     }

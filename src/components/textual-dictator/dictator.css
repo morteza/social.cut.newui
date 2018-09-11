@@ -3,7 +3,7 @@
   flex-wrap: 'wrap';
   justify-content: 'space-between' !important;
   padding: 20px;
-  min-height: 80vh;
+  min-height: 90vh;
   max-height: 95vh;
   z-index: 100;
   touch-action: none;
@@ -44,4 +44,9 @@
   min-height: 16px;
   padding-left: 8px !important;
   padding-right: 8px !important;
+}
+
+.centered {
+  align-items: center;
+  display: block !important;
 }
