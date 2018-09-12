@@ -9,6 +9,12 @@
   touch-action: none;
 }
 
+.padded-loading-grid {
+  height: 80vh;
+  width: 80vw;
+  padding: 20px;
+}
+
 .avatar {
   margin-left: 0px !important;
   border-radius: 0% !important;

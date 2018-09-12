@@ -9,6 +9,69 @@
   },
   "elements": [
     {
+      "id": 7,
+      "type": "textual-dictator",
+      "content": "لطغاً طبق دستورالعمل، پول را تقسیم کنید.",
+      "trials": 10,
+      "selfResources": "۵ هزار تومان",
+      "opponentResources": "۱۰ هزار تومان",
+      "randomizeResources": true,
+      "randomizedPlayerBoxes": true,
+      "uniquePersonas": true,
+      "initialLoadingTime": 10000,
+      "trialLoadingTime": 1000,
+      "messages": {
+        "startingTheGame": "در حال یافتن چند رقیب آنلاین برای شما. لطفاً اندکی منتظر بمانید...",
+        "startingTheTrial": "در حال آماده‌سازی مرحلهٔ جدید با رقیب جدید. لطفا منتظر بمانید...",
+        "instruction": "Hello, play with this player",
+        "finished": "Game is finished"
+      },
+      "personas": [
+        {
+          "id": 1,
+          "avatar": "مرد",
+          "age": 13,
+          "title": "هوشنگ",
+          "description": "از تهران، گیتار و موزیک دوست دارم."
+        },
+        {
+          "id": 2,
+          "avatar": "زن",
+          "age": 12,
+          "title": "مینا",
+          "description": "تهران، نقاشی و موسیقی"
+        },
+        {
+          "id": 3,
+          "avatar": "زن",
+          "age": 14,
+          "title": "تانیا",
+          "description": "تهرانی، شرکت‌کننده در المپیاد ریاضی"
+        },
+        {
+          "id": 4,
+          "avatar": "زن",
+          "age": 13,
+          "title": "مریم",
+          "description": "تهران، فرزانگان، عاشق مغز و نوروساینس"
+        },
+        {
+          "id": 5,
+          "avatar": "مرد",
+          "age": 16,
+          "title": "شایان",
+          "description": "تهران. الکترونیک و فیفا و PES خوراکمه."
+        },        
+        {
+          "id": 6,
+          "avatar": "مرد",
+          "age": 17,
+          "title": "محمد",
+          "description": "تهرانی. علاقه‌مند به برق. برای کنکور دارم آماده می‌شم."
+        }
+      ]
+    },
+    {
       "id": 1,
       "type": "statement",
       "content": "سلام، <br/>به آزمون دانش‌آموزان فرزانگان ۵ خوش آمدید. <br /> لطفاً با دقت و خلوص نیت به پرسش‌ها پاسخ دهید. ممنون."
@@ -71,68 +134,33 @@
       ]
     },
     {
-      "id": 7,
-      "type": "textual-dictator",
-      "content": "This is a dictator game",
-      "resources": 4,
-      "trials": 10,
-      "personas": [
-        {
-          "id": 1,
-          "avatar": "مرد",
-          "age": 13,
-          "title": "هوشنگ",
-          "description": "از تهران، گیتار و موزیک دوست دارم."
-        },
-        {
-          "id": 2,
-          "avatar": "زن",
-          "age": 12,
-          "title": "مینا",
-          "description": "تهران، نقاشی و موسیقی"
-        },
-        {
-          "id": 3,
-          "avatar": "زن",
-          "age": 14,
-          "title": "تانیا",
-          "description": "تهرانی، شرکت‌کننده در المپیاد ریاضی"
-        },
-        {
-          "id": 4,
-          "avatar": "زن",
-          "age": 13,
-          "title": "مریم",
-          "description": "تهران، فرزانگان، عاشق مغز و نوروساینس"
-        },
-        {
-          "id": 5,
-          "avatar": "مرد",
-          "age": 16,
-          "title": "شایان",
-          "description": "تهران. الکترونیک و فیفا و PES خوراکمه."
-        },        
-        {
-          "id": 6,
-          "avatar": "مرد",
-          "age": 17,
-          "title": "محمد",
-          "description": "تهرانی. علاقه‌مند به برق. برای کنکور دارم آماده می‌شم."
-        }
-      ]
-    },
-    {
       "id": 8,
       "type": "choice",
-      "content": "جنسیت بازیکن مقابل شما چه بود؟",
+      "content": "چند زن به عنوان بازیکن مقابل شما بازی کردند؟",
       "choices": [
         {
-          "value": "male",
-          "label": "مرد"
+          "value": "0",
+          "label": "هیچ"
         },
         {
-          "value": "female",
-          "label": "زن"
+          "value": "1",
+          "label": "یک زن"
+        },
+        {
+          "value": "2",
+          "label": "دو زن"
+        },
+        {
+          "value": "3",
+          "label": "سه زن"
+        },
+        {
+          "value": "4",
+          "label": "چهار زن"
+        },
+        {
+          "value": "5",
+          "label": "پنج"
         },
         {
           "value": "forgot",
@@ -144,8 +172,8 @@
       "id": 9,
       "type": "text",
       "placeholder": "نام رقیب",
-      "content": "نام بازیکن رقیب شما چه بود؟",
-      "help": "در صورتی که نام او را به خاطر نمی‌آورید، می‌توانید این بخش را خالی بگذارید."
+      "content": "نام یک بازیکن رقیب شما را بنویسید؟",
+      "help": "در صورتی که نام کسی را به خاطر نمی‌آورید، می‌توانید این بخش را خالی بگذارید."
     },
     {
       "id": 10,

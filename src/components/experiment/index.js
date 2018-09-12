@@ -213,7 +213,7 @@ export default class Experiment extends Component {
         
         { this.isNextButtonVisible(current) &&
         <Grid container justify="center" alignItems="center">
-          <Button variant="contained" color="primary" onClick={this.onNext} size="large">Next</Button>
+          <Button variant="contained" color="primary" onClick={this.onNext} size="large">{this.state.content.direction==="rtl"?"ادامه":"Next"}</Button>
         </Grid>
         }
 

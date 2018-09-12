@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar, LinearProgress, CardActions } from '@material-ui/core';
-
-import { DragDropContainer, DropTarget } from 'react-drag-drop-container';
+import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar, LinearProgress, CardActions, CircularProgress } from '@material-ui/core';
 
 import './dictator.css';
 
@@ -9,7 +7,7 @@ export default class TextualDictator extends Component {
 
   state = {
     startedAt: Date.now(), //TODO mountedTime
-    trialState: "propose-action",
+    trialState: "waiting-for-new-game",
     trial: 0,
     trials: this.props.element.trials,
     opponent: this.props.element.personas[Math.floor(Math.random() * this.props.element.personas.length)],
@@ -19,16 +17,7 @@ export default class TextualDictator extends Component {
       description: "متن تستی",
       age: "۱۳",
       title: "من"
-    },
-    messages: {
-      pressNext: 'همهٔ سکه‌ها تقسیم شد. حالا دکمهٔ ادامه را بفشارید.'
-    },
-    currentPersona: {},
-    resources: [
-      [...Array(this.props.element.resources).keys()], // player 0
-      [], // player 1
-      []  // player 2
-    ]
+    }
   }
 
   updateDimensions = () => {
@@ -73,7 +62,8 @@ export default class TextualDictator extends Component {
     this.setState({
       trial: trial,
       opponent: newOpponent,
-      actions: [...this.state.actions, actionToSave]
+      actions: [...this.state.actions, actionToSave],
+      trialState: "waiting-for-new-trial"
     }, () => {
       if (trial >= trials) this.props.onNext();
     });
@@ -81,9 +71,57 @@ export default class TextualDictator extends Component {
 
   }
 
+  renderAskForProfile = () => {
+    /**{
+      avatar: "مرد",
+      description: "متن تستی",
+      age: "۱۳",
+      title: "من"
+    }, */
+    <div>No Profile</div>
+  }
+
   render() {
-    let {trialState, opponent, me, trial, trials} = this.state;
+    var {trialState, opponent, me, trial} = this.state;
+    var { trials, opponentResources, selfResources, trialLoadingTime, initialLoadingTime} = this.props.element;
     let progress = 100 * trial/trials;
+
+    if (me === undefined) {
+      return this.askForProfile();
+    }
+
+    switch(trialState) {
+      case "waiting-for-new-game":
+        setTimeout(() => {
+          this.setState({trialState: undefined});
+        }, initialLoadingTime);
+        return (
+          <Grid container justify="center" alignItems="center" classes={{container: "padded-loading-grid"}}>
+            <div>{this.props.element.messages.startingTheGame}</div>
+            <br />
+            <CircularProgress />
+          </Grid>);
+      case "waiting-for-new-trial":
+        setTimeout(() => {
+          this.setState({trialState: undefined});
+        }, trialLoadingTime);
+        return (
+          <Grid container justify="center" alignItems="center" classes={{container: "padded-loading-grid"}}>
+            <div>{this.props.element.messages.startingTheTrial}</div>
+            <br />
+            <CircularProgress />
+          </Grid>);
+      default:
+    }
+
+    //randomized resources
+    if (this.props.element.randomizeResources === true) {
+      if (Math.random() > 0.5) {
+        var tmp = opponentResources;
+        opponentResources = selfResources;
+        selfResources = tmp;
+      }
+    }
 
     return (
       <React.Fragment>
@@ -115,7 +153,7 @@ export default class TextualDictator extends Component {
               <CardActions>
                 <Grid container alignItems="center" direction="column">
                 <Grid item>
-                <Button color="primary" onClick={() => this.nextTrial('opponent')}>۱۰ هزار تومان</Button></Grid>
+                <Button color="primary" onClick={() => this.nextTrial('opponent')}>{opponentResources}</Button></Grid>
                 </Grid>
               </CardActions>
             </Card>
@@ -134,7 +172,7 @@ export default class TextualDictator extends Component {
               </CardContent>
               <CardActions>
                 <Grid container alignItems="center" direction="column">
-                <Grid item><Button color="primary" onClick={() => this.nextTrial('self')}>۵ هزار تومان</Button></Grid>
+                <Grid item><Button color="primary" onClick={() => this.nextTrial('self')}>{selfResources}</Button></Grid>
                 </Grid>
               </CardActions>
             </Card>
