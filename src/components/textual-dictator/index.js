@@ -72,7 +72,7 @@ export default class TextualDictator extends Component {
 
   saveMyProfile =  () => {
 
-    if (!this.state.meAge || !this.state.meName || !this.state.meGender || !this.state.meDescription) {
+    if (!this.state.meName || !this.state.meGender || !this.state.meDescription) {
       alert('برای تصمیم‌گیری بهتر اطلاعات خود را وارد کنیدو هیچ استفاده از آن‌ها نخواهد شد.')
       return;
 
@@ -109,7 +109,7 @@ export default class TextualDictator extends Component {
             avatar = {<Avatar aria-label="My Avatar" classes={{colorDefault: 'avatar'}}>{me.gender}</Avatar>}
             classes = {{avatar: 'dictatorRtlAvatar'}}
             className = "playerCardHeader"
-            subheader = {`${me.age} ساله, ${me.description}`}
+            subheader = {me.description}
             />
           <CardContent className="playerCardContent">     
           </CardContent>
@@ -174,7 +174,7 @@ export default class TextualDictator extends Component {
           avatar = {<Avatar aria-label="My Avatar" classes={{colorDefault: 'avatar'}}>{me.gender}</Avatar>}
           classes = {{avatar: 'dictatorRtlAvatar'}}
           className = "playerCardHeader"
-          subheader = {`${me.age} ساله, ${me.description}`}
+          subheader = {me.description}
           />
         <CardContent className="playerCardContent">     
         </CardContent>
