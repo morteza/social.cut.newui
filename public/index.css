@@ -9,7 +9,7 @@
 
 *,input, textarea {
   font-family: 'Samim', 'Helvetica Neue', Arial, Helvetica, sans-serif;
-  /*direction: rtl;*/
+  direction: rtl
 }
 
 body {
@@ -20,6 +20,7 @@ body {
 
 .rtl-text-field > label, .rtl-text-field > #value-helper-text {
   left: auto !important;
+  direction: rtl !important;
   transform-origin: top right !important;
   text-align: right !important;
 }

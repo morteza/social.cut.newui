@@ -9,6 +9,9 @@ import DictatorElement from '../dictator';
 import TextualDictatorElement from '../textual-dictator';
 import TextElement from '../text';
 
+import cookie from 'react-cookies';
+import uuid from 'uuid-random';
+
 import demoDictatorContent from '../../demos/dictator.json';
 
 import './experiment.css';
@@ -174,8 +177,12 @@ export default class Experiment extends Component {
   }
 
   finish = () => {
-    //TODO create random subjectId or read from cookie
-    var subjectId = "037eb7bb-c883-40df-bab5-2537cd1e06bf";
+    var randomUUID = uuid();
+    var subjectId = cookie.load('cutSubjectId');
+    if (!subjectId) {
+      subjectId = randomUUID;
+      cookie.save('cutSubjectId', subjectId);
+    }
     var url = "https://kitten.cut.social/api/v7/sessions/" + this.state.code + "/save/" + subjectId;
 
     var result = {
@@ -187,7 +194,6 @@ export default class Experiment extends Component {
     API.post(url, result)
       .then(res => {this.setState({sessionTrackingCode: res.data.code})});
 
-    console.log("FINISHED AND SUBMITTED");
   }
 
   render() {
@@ -241,14 +247,12 @@ export default class Experiment extends Component {
         return <TextElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} direction={direction} messages={content.messages} />;
       case 'finished':
         return (
-          <div>
-            <p>Finished. Here is what is being submitted:</p>
-            <code>{JSON.stringify({ip: ip, timezoneOffset: timezoneOffset, responses: responses})}</code>
-          </div>);
+          <div dangerouslySetInnerHTML={{__html: content.messages.finished}} styles={{padding: '20px'}}></div>
+        );
       default:
         return (
           <div>
-            <p>UNKNOWN ELEMENT</p>
+            <p>Empty Page</p>
           </div>
         );
     }

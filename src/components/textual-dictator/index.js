@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar, LinearProgress, CardActions, CircularProgress } from '@material-ui/core';
+import { Grid, Card, CardContent, Button, CardHeader, Avatar, LinearProgress, CardActions, CircularProgress, Dialog, DialogContentText, DialogTitle, DialogContent, TextField, DialogActions, MenuItem, Select, InputLabel, FormControl, Input } from '@material-ui/core';
 
-import './dictator.css';
+import styles from './dictator.css';
 
 export default class TextualDictator extends Component {
 
@@ -12,12 +12,11 @@ export default class TextualDictator extends Component {
     trials: this.props.element.trials,
     opponent: this.props.element.personas[Math.floor(Math.random() * this.props.element.personas.length)],
     actions: [],
-    me: {
-      avatar: "مرد",
-      description: "متن تستی",
-      age: "۱۳",
-      title: "من"
-    }
+    me: undefined,
+    meAge: undefined,
+    meGender: 'female',
+    meDescription: undefined,
+    meName: undefined
   }
 
   updateDimensions = () => {
@@ -46,10 +45,10 @@ export default class TextualDictator extends Component {
   getResponse = () => {
     return {
       startedAt: this.state.startedAt,
-      //me: this.state.resources[1].length,
       //opponent: this.state.resources[2].length,
       finishedAt: Date.now(), //TODO last click time
-      actions: this.state.actions
+      actions: this.state.actions,
+      me: this.state.me
     };
   }
 
@@ -71,23 +70,102 @@ export default class TextualDictator extends Component {
 
   }
 
+  saveMyProfile =  () => {
+
+    if (!this.state.meAge || !this.state.meName || !this.state.meGender || !this.state.meDescription) {
+      alert('برای تصمیم‌گیری بهتر اطلاعات خود را وارد کنیدو هیچ استفاده از آن‌ها نخواهد شد.')
+      return;
+
+    }
+
+    this.setState({  me: {
+      age: this.state.meAge,
+      name: this.state.meName,
+      gender: this.state.meGender,
+      description: this.state.meDescription
+    } });
+  }
+
+  handleInputChange = (e, field) => {
+    this.setState({ [field]: e.target.value });
+  };
+
   renderAskForProfile = () => {
-    /**{
-      avatar: "مرد",
-      description: "متن تستی",
-      age: "۱۳",
-      title: "من"
-    }, */
-    <div>No Profile</div>
+    return (
+      <Dialog 
+      classes={{root:styles.TextualDictatorModal}}
+      aria-labelledby="profile-title" 
+      fullScreen={true}
+      open={this.state.me===undefined}>
+        <DialogTitle id="profile-title">اطلاعات شما</DialogTitle>
+
+        <DialogContent>
+          <DialogContentText>
+            لطفاً اطلاعات کلی خود را برای نمایش به بازیکنان دیگر مشخص سازید. سن، جنسیت و یک توصیف یک خطی از خودتان کافی است.
+          </DialogContentText>
+          <Grid container direction="row" justify="space-between" alignItems="stretch">
+            <Grid container direction="row" justify="space-between" alignItems="stretch">
+            <TextField
+                    fullWidth
+                    required
+                    autoFocus
+                    margin="dense"
+                    classes={{root:"rtl-text-field"}}
+                    onChange={(e) => this.handleInputChange(e, 'meName')}
+                    id="name"
+                    value={this.state.meName}
+                    label="نام"
+                    type="text" />
+            <TextField
+                  fullWidth
+                  required
+                  classes={{root:"rtl-text-field"}}
+                  margin="dense"
+                  id="age"
+                  value={this.state.meAge}
+                  onChange={(e) => this.handleInputChange(e, 'meAge')}
+                  label="سن (مثلاً 12)"
+                  type="number"/>
+        <FormControl>
+          <InputLabel htmlFor="gender">جنسیت</InputLabel>
+          <Select
+            value={this.state.meGender}
+            onChange={(e) => this.handleInputChange(e, 'meGender')}
+            classes={{select:"rtl-full-select-field"}}
+            input={<Input id="meGender" name="meGender"/>}>
+            <MenuItem value="زن">زن</MenuItem>
+            <MenuItem value="مرد">مرد</MenuItem>
+          </Select>
+        </FormControl>
+              </Grid>
+        <TextField
+              fullWidth
+              required
+              margin="dense"
+              classes={{root:"rtl-text-field"}}
+              onChange={(e) => this.handleInputChange(e, 'meDescription')}
+              id="description"
+              label="توصیف یک خطی دربارهٔ خودتان "
+              value={this.state.meDescription}
+              type="text" />
+              </Grid>
+          </DialogContent>
+          <DialogActions>
+          <Button onClick={() => this.saveMyProfile()} color="primary">
+            شروع
+          </Button>
+        </DialogActions>
+    </Dialog>);
   }
 
   render() {
+    
     var {trialState, opponent, me, trial} = this.state;
     var { trials, opponentResources, selfResources, trialLoadingTime, initialLoadingTime} = this.props.element;
     let progress = 100 * trial/trials;
 
     if (me === undefined) {
-      return this.askForProfile();
+      return this.renderAskForProfile();
     }
 
     switch(trialState) {
@@ -130,11 +208,11 @@ export default class TextualDictator extends Component {
       <Grid container direction="column" justify="space-between" alignItems="stretch" className="dictatorBoard">
         
         <Grid item>
-        شما برای تقسیم مقداری پول باید تصمیم بگیرید. برای تقسیم آن دو انتخاب دارید:
+        شما برای تقسیم مقداری پول با شرکننده مقابل دو انتخاب. برای تقسیم آن دو انتخاب دارید:
             <br /><ul><li>
-         به شرکت کنندهٔ مقابل ۱۰ هزار تومان دهید و خودتان چیزی برندارید.
+         پولی را به شرکت کنندهٔ مقابل دهید و خودتان چیزی برندارید.
                  </li><li>
-         به شرکت‌کنندهٔ مقابل چیزی ندهید و ۵ هزار تومان برای خودتان بردارید.
+         به شرکت‌کنندهٔ مقابل چیزی ندهید و همه را برای خودتان بردارید.
         </li>
         </ul>
         </Grid>
@@ -162,11 +240,11 @@ export default class TextualDictator extends Component {
         <Grid item>
             <Card>
               <CardHeader 
-                title={me.title}
-                avatar = {<Avatar aria-label="My Avatar" classes={{colorDefault: 'avatar'}}>{me.avatar}</Avatar>}
+                title={`${me.name} (خودم)`}
+                avatar = {<Avatar aria-label="My Avatar" classes={{colorDefault: 'avatar'}}>{me.gender}</Avatar>}
                 classes = {{avatar: 'dictatorRtlAvatar'}}
                 className = "playerCardHeader"
-                subheader = {me.description}
+                subheader = {`${me.age} ساله, ${me.description}`}
                 />
               <CardContent className="playerCardContent">     
               </CardContent>

@@ -22,6 +22,10 @@
   margin-right: 0px !important;
 }
 
+.rtl-full-select-field {
+  width: 100% !important;
+}
+
 .dictatorDragger {
   z-index: 9999;
 }
@@ -49,4 +53,13 @@
 .centered {
   align-items: center;
   display: block !important;
+}
+
+.TextualDictatorModal {
+    display: 'flex';
+    flex-wrap: 'wrap';
+  }
+
+.TextualDictatorModalRoot.formControl {
+    width: 100%
 }

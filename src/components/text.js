@@ -51,7 +51,7 @@ export default class Text extends CutElement {
         </Grid>
         <Grid container alignItems="stretch">
         <TextField
-          classes={{root:(direction==="rtl")?"rtl-text-field":""}}
+          classes={{root:(direction==="rtl !important")?"rtl-text-field":""}}
           id="value"
           label={element.placeholder || ""}
           value={this.state.value}
