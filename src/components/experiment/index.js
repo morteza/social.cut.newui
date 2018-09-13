@@ -13,6 +13,7 @@ import cookie from 'react-cookies';
 import uuid from 'uuid-random';
 
 import demoDictatorContent from '../../demos/dictator.json';
+import devTestContent from '../../demos/test.json';
 
 import './experiment.css';
 
@@ -84,6 +85,24 @@ export default class Experiment extends Component {
   componentDidMount(){
 
     API.getIp().then(res => {this.setState({ip: res.data.ip})});
+
+    if (this.state.code === 'devtest') {
+      let theme = createMuiTheme({
+        palette: {direction: devTestContent.direction || 'ltr'},
+        typography: {
+          fontFamily: ['Samim', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
+        }
+      });
+
+      this.setState({
+        content: devTestContent, 
+        loaded: true, 
+        current: {...devTestContent.elements[0], index: 0},
+        direction:  devTestContent.direction || 'ltr',
+        theme: theme
+      });
+      return;
+    }
 
     if (this.state.code === 'dictator') {
       let theme = createMuiTheme({
@@ -247,7 +266,7 @@ export default class Experiment extends Component {
         return <TextElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} direction={direction} messages={content.messages} />;
       case 'finished':
         return (
-          <div dangerouslySetInnerHTML={{__html: content.messages.finished}} styles={{padding: '20px'}}></div>
+          <div dangerouslySetInnerHTML={{__html: content.messages.finished}} style={{padding: '20px'}}></div>
         );
       default:
         return (

@@ -90,6 +90,106 @@ export default class TextualDictator extends Component {
     this.setState({ [field]: e.target.value });
   };
 
+  renderPlayBoxesRandomly = () => {
+
+    var {trialState, opponent, me, trial} = this.state;
+    var { trials, opponentResources, selfResources, trialLoadingTime, initialLoadingTime} = this.props.element;
+    let progress = 100 * trial/trials;
+
+    var rnd = Math.random();
+
+    if (rnd> 0.5) {
+      return (
+      <React.Fragment>
+
+      <Grid item>
+        <Card>
+          <CardHeader 
+            title={`${me.name} (خودم)`}
+            avatar = {<Avatar aria-label="My Avatar" classes={{colorDefault: 'avatar'}}>{me.gender}</Avatar>}
+            classes = {{avatar: 'dictatorRtlAvatar'}}
+            className = "playerCardHeader"
+            subheader = {`${me.age} ساله, ${me.description}`}
+            />
+          <CardContent className="playerCardContent">     
+          </CardContent>
+          <CardActions>
+            <Grid container alignItems="center" direction="column">
+            <Grid item><Button color="primary" onClick={() => this.nextTrial('self')}>{selfResources}</Button></Grid>
+            </Grid>
+          </CardActions>
+        </Card>
+      </Grid>
+      <Grid item>
+        <Card>
+          <CardHeader 
+            title={opponent.title}
+            avatar = {<Avatar aria-label="Opponent Avatar" classes={{colorDefault: 'avatar'}}>{opponent.avatar}</Avatar>}
+            classes = {{avatar: 'dictatorRtlAvatar'}}
+            className = "playerCardHeader"
+            subheader = {opponent.description}
+            />
+          <CardContent className="playerCardContent">
+          </CardContent>
+          <CardActions>
+            <Grid container alignItems="center" direction="column">
+            <Grid item>
+            <Button color="primary" onClick={() => this.nextTrial('opponent')}>{opponentResources}</Button></Grid>
+            </Grid>
+          </CardActions>
+        </Card>
+      </Grid>
+      
+      </React.Fragment>);
+        
+    }
+
+
+    return (
+      <React.Fragment>
+      <Grid item>
+      <Card>
+        <CardHeader 
+          title={opponent.title}
+          avatar = {<Avatar aria-label="Opponent Avatar" classes={{colorDefault: 'avatar'}}>{opponent.avatar}</Avatar>}
+          classes = {{avatar: 'dictatorRtlAvatar'}}
+          className = "playerCardHeader"
+          subheader = {opponent.description}
+          />
+        <CardContent className="playerCardContent">
+        </CardContent>
+        <CardActions>
+          <Grid container alignItems="center" direction="column">
+          <Grid item>
+          <Button color="primary" onClick={() => this.nextTrial('opponent')}>{opponentResources}</Button></Grid>
+          </Grid>
+        </CardActions>
+      </Card>
+  </Grid>
+
+  <Grid item>
+      <Card>
+        <CardHeader 
+          title={`${me.name} (خودم)`}
+          avatar = {<Avatar aria-label="My Avatar" classes={{colorDefault: 'avatar'}}>{me.gender}</Avatar>}
+          classes = {{avatar: 'dictatorRtlAvatar'}}
+          className = "playerCardHeader"
+          subheader = {`${me.age} ساله, ${me.description}`}
+          />
+        <CardContent className="playerCardContent">     
+        </CardContent>
+        <CardActions>
+          <Grid container alignItems="center" direction="column">
+          <Grid item><Button color="primary" onClick={() => this.nextTrial('self')}>{selfResources}</Button></Grid>
+          </Grid>
+        </CardActions>
+      </Card>
+  </Grid>
+  </React.Fragment>);
+
+
+  }
+
   renderAskForProfile = () => {
     return (
       <Dialog 
@@ -217,45 +317,7 @@ export default class TextualDictator extends Component {
         </ul>
         </Grid>
         
-        <Grid item>
-            <Card>
-              <CardHeader 
-                title={opponent.title}
-                avatar = {<Avatar aria-label="Opponent Avatar" classes={{colorDefault: 'avatar'}}>{opponent.avatar}</Avatar>}
-                classes = {{avatar: 'dictatorRtlAvatar'}}
-                className = "playerCardHeader"
-                subheader = {opponent.description}
-                />
-              <CardContent className="playerCardContent">
-              </CardContent>
-              <CardActions>
-                <Grid container alignItems="center" direction="column">
-                <Grid item>
-                <Button color="primary" onClick={() => this.nextTrial('opponent')}>{opponentResources}</Button></Grid>
-                </Grid>
-              </CardActions>
-            </Card>
-        </Grid>
-
-        <Grid item>
-            <Card>
-              <CardHeader 
-                title={`${me.name} (خودم)`}
-                avatar = {<Avatar aria-label="My Avatar" classes={{colorDefault: 'avatar'}}>{me.gender}</Avatar>}
-                classes = {{avatar: 'dictatorRtlAvatar'}}
-                className = "playerCardHeader"
-                subheader = {`${me.age} ساله, ${me.description}`}
-                />
-              <CardContent className="playerCardContent">     
-              </CardContent>
-              <CardActions>
-                <Grid container alignItems="center" direction="column">
-                <Grid item><Button color="primary" onClick={() => this.nextTrial('self')}>{selfResources}</Button></Grid>
-                </Grid>
-              </CardActions>
-            </Card>
-        </Grid>
-              
+        {this.renderPlayBoxesRandomly()}
       </Grid>
       </React.Fragment>
     );
