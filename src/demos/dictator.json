@@ -10,6 +10,70 @@
   },
   "elements": [
     {
+      "id": 7,
+      "type": "textual-dictator",
+      "content": "لطغاً طبق دستورالعمل، پول را تقسیم کنید.",
+      "trials": 10,
+      "resources": 10,
+      "selfResources": "۵۰۰ تومان",
+      "opponentResources": "۱۰۰۰ تومان",
+      "randomizeResources": true,
+      "randomizedPlayerBoxes": true,
+      "uniquePersonas": true,
+      "initialLoadingTime": 10000,
+      "trialLoadingTime": 3000,
+      "messages": {
+        "startingTheGame": "در حال یافتن چند رقیب آنلاین برای شما. لطفاً اندکی منتظر بمانید...",
+        "startingTheTrial": "در حال آماده‌سازی مرحلهٔ جدید با رقیب جدید. لطفا منتظر بمانید...",
+        "instruction": "Hello, play with this player",
+        "finished": "Game is finished"
+      },
+      "personas": [
+        {
+          "id": 1,
+          "avatar": "مرد",
+          "age": 13,
+          "title": "هوشنگ",
+          "description": "از تهران، گیتار و موزیک دوست دارم."
+        },
+        {
+          "id": 2,
+          "avatar": "زن",
+          "age": 12,
+          "title": "مینا",
+          "description": "تهران، نقاشی و موسیقی"
+        },
+        {
+          "id": 3,
+          "avatar": "زن",
+          "age": 14,
+          "title": "تانیا",
+          "description": "تهرانی، شرکت‌کننده در المپیاد ریاضی"
+        },
+        {
+          "id": 4,
+          "avatar": "زن",
+          "age": 13,
+          "title": "مریم",
+          "description": "تهران، فرزانگان، عاشق مغز و نوروساینس"
+        },
+        {
+          "id": 5,
+          "avatar": "مرد",
+          "age": 16,
+          "title": "شایان",
+          "description": "تهران. الکترونیک و فیفا و PES خوراکمه."
+        },        
+        {
+          "id": 6,
+          "avatar": "مرد",
+          "age": 17,
+          "title": "محمد",
+          "description": "تهرانی. علاقه‌مند به برق. برای کنکور دارم آماده می‌شم."
+        }
+      ]
+    },
+    {
       "id": 1,
       "type": "statement",
       "content": "سلام، <br/><br/>به آزمون دانش‌آموزان فرزانگان ۵ خوش آمدید. <br /> لطفاً با دقت و خلوص نیت به پرسش‌ها پاسخ دهید.<br/> ممنون."
@@ -98,69 +162,6 @@
       "id": 6,
       "type": "statement",
       "content": "</b>راهنمای بازی</b><br /><br /><br />در بازی پیش رو شما به صورت آنلاین با شرکت‌کنندهٔ دیگری بازی خواهید کرد. این بازی چند مرحله دارد و تعداد این مرحله بستگی به تعداد شرکت‌کنندگان آنلاین در هنگام بازی شما دارد.</br />در هر مرحله از بازی، شما ده هزار تومان پول دارید که باید آن را به هر مقداری که می‌خواهید بین خود و شرکت‌کننده مقابل تقسیم کنید.<br />در پایان با توجه به پول‌هایی که به دست آوردید، مجموع امتیاز شما و افرادی که با آن‌ها بازی کردید محاسبه خواهد شد. با توجه به امتیاز کسب شده، به قید قرعه به ۳۰ نفر از شرکت‌کنندگان جوایز نقدی تعلق خواهد گرفت.<br/>"
-    },
-    {
-      "id": 7,
-      "type": "textual-dictator",
-      "content": "لطغاً طبق دستورالعمل، پول را تقسیم کنید.",
-      "trials": 10,
-      "selfResources": "۵۰۰ تومان",
-      "opponentResources": "۱۰۰۰ تومان",
-      "randomizeResources": true,
-      "randomizedPlayerBoxes": true,
-      "uniquePersonas": true,
-      "initialLoadingTime": 10000,
-      "trialLoadingTime": 3000,
-      "messages": {
-        "startingTheGame": "در حال یافتن چند رقیب آنلاین برای شما. لطفاً اندکی منتظر بمانید...",
-        "startingTheTrial": "در حال آماده‌سازی مرحلهٔ جدید با رقیب جدید. لطفا منتظر بمانید...",
-        "instruction": "Hello, play with this player",
-        "finished": "Game is finished"
-      },
-      "personas": [
-        {
-          "id": 1,
-          "avatar": "مرد",
-          "age": 13,
-          "title": "هوشنگ",
-          "description": "از تهران، گیتار و موزیک دوست دارم."
-        },
-        {
-          "id": 2,
-          "avatar": "زن",
-          "age": 12,
-          "title": "مینا",
-          "description": "تهران، نقاشی و موسیقی"
-        },
-        {
-          "id": 3,
-          "avatar": "زن",
-          "age": 14,
-          "title": "تانیا",
-          "description": "تهرانی، شرکت‌کننده در المپیاد ریاضی"
-        },
-        {
-          "id": 4,
-          "avatar": "زن",
-          "age": 13,
-          "title": "مریم",
-          "description": "تهران، فرزانگان، عاشق مغز و نوروساینس"
-        },
-        {
-          "id": 5,
-          "avatar": "مرد",
-          "age": 16,
-          "title": "شایان",
-          "description": "تهران. الکترونیک و فیفا و PES خوراکمه."
-        },        
-        {
-          "id": 6,
-          "avatar": "مرد",
-          "age": 17,
-          "title": "محمد",
-          "description": "تهرانی. علاقه‌مند به برق. برای کنکور دارم آماده می‌شم."
-        }
-      ]
     },
     {
       "id": 7,

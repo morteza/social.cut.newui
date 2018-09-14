@@ -9,6 +9,10 @@
   touch-action: none;
 }
 
+.padded-slider {
+  paddding: 20px;
+}
+
 .avatar {
   margin-left: 0px !important;
   border-radius: 0% !important;
