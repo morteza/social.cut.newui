@@ -10,7 +10,7 @@
 }
 
 .padded-slider {
-  paddding: 20px;
+  padding: 20px !important;
 }
 
 .avatar {
@@ -65,5 +65,9 @@
   }
 
 .TextualDictatorModalRoot.formControl {
-    width: 100%
+    width: 100% !important;
+}
+
+.textual-dg-slider-root {
+  width: auto !important;
 }

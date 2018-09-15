@@ -13,13 +13,13 @@ export default class TextualDictator extends Component {
     opponent: this.props.element.personas[Math.floor(Math.random() * this.props.element.personas.length)],
     actions: [],
     meShare: 0,
-    oponentShare: this.props.element.resources,
+    opponentShare: this.props.element.resources,
     me: undefined,
-    meAge: undefined,
+    meAge: '',
     meGender: 'female',
-    meDescription: undefined,
-    meName: undefined,
-    rnd: Math.random
+    meDescription: '',
+    meName: '',
+    rnd: Math.random()
   }
 
   updateDimensions = () => {
@@ -65,6 +65,8 @@ export default class TextualDictator extends Component {
       rnd: Math.random,
       trial: trial,
       opponent: newOpponent,
+      meShare: 0,
+      opponentShare: 0,
       actions: [...this.state.actions, actionToSave],
       trialState: "waiting-for-new-trial"
     }, () => {
@@ -72,6 +74,14 @@ export default class TextualDictator extends Component {
     });
 
 
+  }
+
+  convertTofarsiDigits = (num) => {
+    let fa = '۰۱۲۳۴۵۶۷۸۹';
+    var res = '';
+    for(var i=0; i<=num.length; i++)
+      res += fa.charAt(i);
+    return num;
   }
 
   saveMyProfile =  () => {
@@ -118,11 +128,9 @@ export default class TextualDictator extends Component {
             className = "playerCardHeader"
             subheader = {me.description}
             />
-          <CardContent className="playerCardContent">     
-          </CardContent>
           <CardActions>
             <Grid container alignItems="center" direction="column">
-            <Grid item>{this.state.meShare} سکه</Grid>
+            <Grid item>{this.convertTofarsiDigits(this.state.meShare)} سکه</Grid>
             </Grid>
           </CardActions>
         </Card>
@@ -137,11 +145,9 @@ export default class TextualDictator extends Component {
             className = "playerCardHeader"
             subheader = {opponent.description}
             />
-          <CardContent className="playerCardContent">
-          </CardContent>
           <CardActions>
             <Grid container alignItems="center" direction="column">
-            <Grid item>{this.state.meShare} سکه</Grid>
+            <Grid item>{this.convertTofarsiDigits(this.state.opponentShare)} سکه</Grid>
             </Grid>
           </CardActions>
         </Card>
@@ -164,11 +170,9 @@ export default class TextualDictator extends Component {
           className = "playerCardHeader"
           subheader = {opponent.description}
           />
-        <CardContent className="playerCardContent">
-        </CardContent>
         <CardActions>
           <Grid container alignItems="center" direction="column">
-          <Grid item>{this.state.opponentShare} سکه</Grid>
+          <Grid item>{this.convertTofarsiDigits(this.state.opponentShare)} سکه</Grid>
           </Grid>
         </CardActions>
       </Card>
@@ -183,11 +187,9 @@ export default class TextualDictator extends Component {
           className = "playerCardHeader"
           subheader = {me.description}
           />
-        <CardContent className="playerCardContent">     
-        </CardContent>
         <CardActions>
           <Grid container alignItems="center" direction="column">
-          <Grid item>{this.state.meShare} سکه</Grid>
+          <Grid item>{this.convertTofarsiDigits(this.state.meShare)} سکه</Grid>
           </Grid>
         </CardActions>
       </Card>
@@ -208,10 +210,10 @@ export default class TextualDictator extends Component {
 
         <DialogContent>
           <DialogContentText>
-            لطفاً اطلاعات کلی خود را برای نمایش به بازیکنان دیگر مشخص سازید. سن، جنسیت و یک توصیف یک خطی از خودتان کافی است.
+            لطفاً اطلاعات کلی خود را برای نمایش به بازیکنان دیگر مشخص سازید. نام، جنسیت و یک توصیف یک خطی از خودتان کافی است.
           </DialogContentText>
-          <Grid container direction="row" justify="space-between" alignItems="stretch">
-            <Grid container direction="row" justify="space-between" alignItems="stretch">
+          <Grid container direction="column" justify="space-between" alignItems="stretch">
+            <Grid container direction="column" justify="space-between" alignItems="stretch">
             <FormControl>
           <InputLabel htmlFor="gender">جنسیت</InputLabel>
           <Select
@@ -249,7 +251,7 @@ export default class TextualDictator extends Component {
               </Grid>
           </DialogContent>
           <DialogActions>
-          <Button onClick={() => this.saveMyProfile()} color="primary">
+          <Button onClick={() => this.saveMyProfile()} color="primary" variant="contained">
             شروع
           </Button>
         </DialogActions>
@@ -303,22 +305,21 @@ export default class TextualDictator extends Component {
       <React.Fragment>
       <LinearProgress color="secondary" variant="determinate" value={progress} style={{width: '100%'}}/>
 
-      <Grid container direction="column" justify="space-between" alignItems="stretch" className="dictatorBoard">
+      <Grid container direction="column" justify="space-around" alignItems="stretch" className="dictatorBoard">
         
-        <Grid item>
-        شما باید ۱۰ هزار تومان پول را بین خود و شرکت‌کنندهٔ مقابل تقسیم کنید و با اسلایدر زیر سهم خود را مشخص نموده و بقیه به به شخص مقابل شما تعلق می‌گیرد
-            <br /><br />
-        جهت اطمینان مقادیر در بخش‌های هر بازیکن نشان داده می‌شود. پس از تایید و نهایی کردن، دکمهٔ پیشنهاد را بفشارید.
+        <Grid item zeroMinWidth>
+        <Typography>
+        شما باید چند سکه را بین خود و رقیب تقسیم کنید. با اسلایدر زیر، سهم خود را مشخص کنید و بقیه به شخص مقابل شما تعلق می‌گیرد
+        <br />
+        جهت اطمینان سهم هر بازیکن نشان داده می‌شود. پس از تایید، دکمهٔ پیشنهاد را بفشارید.
+        </Typography>
         </Grid>
         
         <Grid item className="padded-slider">
-        <Typography id="label">سهم شما</Typography>
-        <Slider value={this.state.meShare} min={0} max={this.props.element.resources} step={1} onChange={this.handleProposalSliderChange} />
-      </Grid>
-
-      <Grid item alignItems="space-around" justify="center">
-      <Button color="primary" onClick={() => this.nextTrial('proposed')}>ارائهٔ پیشنهاد</Button>
-      </Grid>
+        <Typography id="label" align="center" variant="title">سهم شما</Typography>
+        <Slider value={this.state.meShare} min={0} max={this.props.element.resources} step={1} onChange={this.handleProposalSliderChange} classes={{root: "textual-dg-slider-root"}} />
+        <Button color="primary" fullWidth mini onClick={() => this.nextTrial('proposed')} variant="contained">ارائهٔ پیشنهاد</Button>
+        </Grid>
 
         {this.renderPlayBoxesRandomly()}
       </Grid>
