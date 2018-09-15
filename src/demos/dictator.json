@@ -110,8 +110,8 @@
       "randomizeResources": true,
       "randomizedPlayerBoxes": true,
       "uniquePersonas": true,
-      "initialLoadingTime": 1000,
-      "trialLoadingTime": 300,
+      "initialLoadingTime": 10000,
+      "trialLoadingTime": 5000,
       "messages": {
         "startingTheGame": "در حال یافتن چند رقیب آنلاین برای شما. لطفاً اندکی منتظر بمانید...",
         "startingTheTrial": "در حال آماده‌سازی مرحلهٔ جدید با رقیب جدید. لطفا منتظر بمانید...",
