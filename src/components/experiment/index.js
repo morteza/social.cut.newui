@@ -12,6 +12,7 @@ import TextElement from '../text';
 import cookie from 'react-cookies';
 import uuid from 'uuid-random';
 
+import demoReflectContent from '../../demos/reflect.json';
 import demoDictatorContent from '../../demos/dictator.json';
 import devTestContent from '../../demos/test.json';
 
@@ -99,6 +100,24 @@ export default class Experiment extends Component {
         loaded: true, 
         current: {...devTestContent.elements[0], index: 0},
         direction:  devTestContent.direction || 'ltr',
+        theme: theme
+      });
+      return;
+    }
+
+    if (this.state.code === 'reflect') {
+      let theme = createMuiTheme({
+        palette: {direction: demoReflectContent.direction || 'ltr'},
+        typography: {
+          fontFamily: ['Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
+        }
+      });
+
+      this.setState({
+        content: demoReflectContent, 
+        loaded: true, 
+        current: {...demoReflectContent.elements[0], index: 0},
+        direction:  demoReflectContent.direction || 'ltr',
         theme: theme
       });
       return;

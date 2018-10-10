@@ -1,0 +1,145 @@
+{
+  "title": "reflect-mpi",
+  "description": "Reflection Tool - Max Plank Institute",
+  "direction": "ltr",
+  "study": "reflect",
+  "messages": {
+    "required": "Please answer to proceed.",
+    "next": "Next",
+    "finished": "The survey is finished.<br /> Thank you for your participation."
+  },
+  "elements": [
+    {
+      "id": 1,
+      "type": "choice",
+      "required": true,
+      "content": "How were you feeling today?",
+      "choices": [
+        {"value": 1, "label": "Very Bad"},
+        {"value": 2, "label": "Bad"},
+        {"value": 3, "label": "Neutral"},
+        {"value": 4, "label": "Good"},
+        {"value": 5, "label": "Very Good"}
+      ]
+    },
+    {
+      "id": 2,
+      "type": "text",
+      "required": true,
+      "content": "Why did you feel that way?",
+      "placeholder": "Your Answer"
+    },
+    {
+      "id": 3,
+      "type": "choice",
+      "required": true,
+      "content": "Did you do better or worse than usual?",
+      "choices": [
+        {"value": "worse", "label": "Worse"},
+        {"value": "same", "label": "Same"},
+        {"value": "better", "label": "Better"}
+      ]
+    },
+    {
+      "id": 4,
+      "type": "choice",
+      "required": true,
+      "content": "Did something go wrong today?",
+      "choices": [
+        {"value": 1, "label": "Very Bad"},
+        {"value": 2, "label": "Bad"}
+      ]
+    },
+    {
+      "id": 5,
+      "type": "text",
+      "required": true,
+      "conditions": [],
+      "content": "Why did this go wrong?",
+      "placeholder": "Your Answer",
+      "help": "Please write what did go wrong carefully. You can use lists."
+    },
+    {
+      "id": 6,
+      "type": "text",
+      "required": true,
+      "conditions": [],
+      "content": "What was great, fun, or meaningful today?",
+      "placeholder": "Your Answer"
+    },
+    {
+      "id": 7,
+      "type": "choice",
+      "required": true,
+      "content": "Did something outstanding happen today?",
+      "choices": [
+        {"value": "yes", "label": "Yes"},
+        {"value": "no", "label": "No"}
+      ]
+    },
+    {
+      "id": 8,
+      "type": "text",
+      "required": true,
+      "conditions": [],
+      "content": "Why did this happen?",
+      "placeholder": "Your Answer"
+    },
+    {
+      "id": 9,
+      "type": "text",
+      "required": true,
+      "content": "what did you notice or improve today?",
+      "placeholder": "Your Answer"
+    },
+    {
+      "id": 10,
+      "type": "choice",
+      "required": true,
+      "content": "Can you learn a general lesson from today's experiences?",
+      "choices": [
+        {"value": "yes", "label": "Yes"},
+        {"value": "no", "label": "No"}
+      ]
+    },
+    {
+      "id": 11,
+      "type": "text",
+      "required": true,
+      "conditions": [],
+      "content": "Which lesson can you learn from today's experiences?",
+      "placeholder": "Your Answer",
+      "help": "Please answer (this is a tip)"
+    },
+    {
+      "id": 12,
+      "type": "text",
+      "required": true,
+      "content": "Why are you avoiding?",
+      "placeholder": "Your Answer"
+    },
+    {
+      "id": 13,
+      "type": "text",
+      "required": true,
+      "content": "What do you want to do differently tomorrow?",
+      "placeholder": "Your Answer",
+      "help": "Please answer (this is a tip)"
+    },
+    {
+      "id": 14,
+      "type": "text",
+      "required": true,
+      "content": "14. what are you currently trying to improve about yourself?",
+      "placeholder": "Your Answer",
+      "help": "Please answer (this is a tip)"
+    },
+    {
+      "id": 15,
+      "type": "text",
+      "content": "Thank you for your participation. The survey is finished now, you can enter your email below for further details and new experiments, otherwise click 'Next' to submit your responses.",
+      "placeholder": "Your Email",
+      "help": "Example: joe@xyz.com"
+    }
+  ]
+}
