@@ -15,11 +15,26 @@
       "required": true,
       "content": "How were you feeling today?",
       "choices": [
-        {"value": 1, "label": "Very Bad"},
-        {"value": 2, "label": "Bad"},
-        {"value": 3, "label": "Neutral"},
-        {"value": 4, "label": "Good"},
-        {"value": 5, "label": "Very Good"}
+        {
+          "value": 1,
+          "label": "Very Bad"
+        },
+        {
+          "value": 2,
+          "label": "Bad"
+        },
+        {
+          "value": 3,
+          "label": "Neutral"
+        },
+        {
+          "value": 4,
+          "label": "Good"
+        },
+        {
+          "value": 5,
+          "label": "Very Good"
+        }
       ]
     },
     {
@@ -35,9 +50,18 @@
       "required": true,
       "content": "Did you do better or worse than usual?",
       "choices": [
-        {"value": "worse", "label": "Worse"},
-        {"value": "same", "label": "Same"},
-        {"value": "better", "label": "Better"}
+        {
+          "value": "worse",
+          "label": "Worse"
+        },
+        {
+          "value": "same",
+          "label": "Same"
+        },
+        {
+          "value": "better",
+          "label": "Better"
+        }
       ]
     },
     {
@@ -46,15 +70,27 @@
       "required": true,
       "content": "Did something go wrong today?",
       "choices": [
-        {"value": 1, "label": "Very Bad"},
-        {"value": 2, "label": "Bad"}
+        {
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "value": "no",
+          "label": "No"
+        }
       ]
     },
     {
       "id": 5,
       "type": "text",
       "required": true,
-      "conditions": [],
+      "conditions": [
+        {
+          "elementId": 4,
+          "expected": "yes",
+          "default": "no"
+        }
+      ],
       "content": "Why did this go wrong?",
       "placeholder": "Your Answer",
       "help": "Please write what did go wrong carefully. You can use lists."
@@ -63,7 +99,13 @@
       "id": 6,
       "type": "text",
       "required": true,
-      "conditions": [],
+      "conditions": [
+        {
+          "elementId": 4,
+          "expected": "no",
+          "default": "yes"
+        }
+      ],
       "content": "What was great, fun, or meaningful today?",
       "placeholder": "Your Answer"
     },
@@ -73,15 +115,27 @@
       "required": true,
       "content": "Did something outstanding happen today?",
       "choices": [
-        {"value": "yes", "label": "Yes"},
-        {"value": "no", "label": "No"}
+        {
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "value": "no",
+          "label": "No"
+        }
       ]
     },
     {
       "id": 8,
       "type": "text",
       "required": true,
-      "conditions": [],
+      "conditions": [
+        {
+          "elementId": 7,
+          "expected": "yes",
+          "default": "no"
+        }
+      ],
       "content": "Why did this happen?",
       "placeholder": "Your Answer"
     },
@@ -98,15 +152,27 @@
       "required": true,
       "content": "Can you learn a general lesson from today's experiences?",
       "choices": [
-        {"value": "yes", "label": "Yes"},
-        {"value": "no", "label": "No"}
+        {
+          "value": "yes",
+          "label": "Yes"
+        },
+        {
+          "value": "no",
+          "label": "No"
+        }
       ]
     },
     {
       "id": 11,
       "type": "text",
       "required": true,
-      "conditions": [],
+      "conditions": [
+        {
+          "elementId": 10,
+          "expected": "yes",
+          "default": "no"
+        }
+      ],
       "content": "Which lesson can you learn from today's experiences?",
       "placeholder": "Your Answer",
       "help": "Please answer (this is a tip)"
