@@ -84,13 +84,10 @@
       "id": 5,
       "type": "text",
       "required": true,
-      "conditions": [
-        {
-          "elementId": 4,
-          "expected": "yes",
-          "default": "no"
-        }
-      ],
+      "condition": {
+        "elementId": 4,
+        "expectedValue": "yes"
+      },
       "content": "Why did this go wrong?",
       "placeholder": "Your Answer",
       "help": "Please write what did go wrong carefully. You can use lists."
@@ -99,13 +96,10 @@
       "id": 6,
       "type": "text",
       "required": true,
-      "conditions": [
-        {
-          "elementId": 4,
-          "expected": "no",
-          "default": "yes"
-        }
-      ],
+      "condition": {
+        "elementId": 4,
+        "expectedValue": "no"
+      },
       "content": "What was great, fun, or meaningful today?",
       "placeholder": "Your Answer"
     },
@@ -129,13 +123,10 @@
       "id": 8,
       "type": "text",
       "required": true,
-      "conditions": [
-        {
-          "elementId": 7,
-          "expected": "yes",
-          "default": "no"
-        }
-      ],
+      "condition": {
+        "elementId": 7,
+        "expectedValue": "yes"
+      },
       "content": "Why did this happen?",
       "placeholder": "Your Answer"
     },
@@ -166,13 +157,10 @@
       "id": 11,
       "type": "text",
       "required": true,
-      "conditions": [
-        {
-          "elementId": 10,
-          "expected": "yes",
-          "default": "no"
-        }
-      ],
+      "condition": {
+        "elementId": 10,
+        "expectedValue": "yes"
+      },
       "content": "Which lesson can you learn from today's experiences?",
       "placeholder": "Your Answer",
       "help": "Please answer (this is a tip)"

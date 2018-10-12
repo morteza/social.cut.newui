@@ -181,6 +181,28 @@ export default class Experiment extends Component {
     this.setState({notification: undefined});
   }
 
+  /**
+   * Checks if a condition is satisfied based on responses.
+   * A condition is an object of {elementId, expectedValue}.
+   */
+  isConditionSatisfied = (responses, condition) => {
+    if (condition && condition.elementId) {
+      let satisfied = responses.find(function(elem) {
+        if (elem && elem.id === condition.elementId && elem.value === condition.expectedValue) {
+          return elem;
+        }
+      });
+
+      if (satisfied) 
+        return true;
+      
+      // if there is a condition field and it is not satisfied
+      return false;
+    }
+    // if there is no condition field or it's not a valid field (no elementId)
+    return true;
+  }
+
   onNext = () => {
     var {current, content} = this.state;
     //store
@@ -199,14 +221,23 @@ export default class Experiment extends Component {
     elementResponse.id = current.id;
 
     current.index++;
+
     if (current.index<content.elements.length){
       var newElement = this.state.content.elements[current.index];
       newElement.index = current.index;
       let progress = 100 * current.index / this.state.content.elements.length;
-      this.setState(
-        {progress: progress,responses: [...this.state.responses, elementResponse], current: newElement},
-        () => {} //nothing to do (e.g., set loading?)
-      );
+      let responses = [...this.state.responses, elementResponse];
+      if (!this.isConditionSatisfied(responses, newElement.condition)) {
+        current.index++;
+        newElement = this.state.content.elements[current.index];
+        newElement.index = current.index;
+        progress = 100 * current.index / this.state.content.elements.length;
+        responses = [...this.state.responses, {id: elementResponse.id, index: elementResponse.index, type: elementResponse.type, skipped: true}];
+        // add skip response, and skip this question
+        this.setState({progress: progress,responses: responses, current: newElement});
+      } else {
+        this.setState({progress: progress,responses: responses, current: newElement});
+      }
     } else
       this.setState(
         {progress: 100, responses: [...this.state.responses, elementResponse], current: {type: 'finished'}},
