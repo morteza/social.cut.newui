@@ -43,6 +43,7 @@ export default class Text extends CutElement {
   render() {
     let {styles} = this.state;
     let {element, direction} = this.props;
+    let multiline = element.multiline;
     return (
       <Grid container style={styles.root} direction="column" alignItems="stretch">
         <Grid item>
@@ -51,7 +52,7 @@ export default class Text extends CutElement {
         </Grid>
         <Grid container alignItems="stretch">
         <TextField
-          classes={{root:(direction==="rtl !important")?"rtl-text-field":""}}
+          classes={{root:(direction==="rtl")?"rtl-text-field":""}}
           id="value"
           label={element.placeholder || ""}
           value={this.state.value}
@@ -59,6 +60,9 @@ export default class Text extends CutElement {
           fullWidth 
           margin="normal"
           helperText={element.help}
+          variant="filled"
+          multiline = {multiline}
+          rows = {3}
         />
         </Grid>
       </Grid>

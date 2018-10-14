@@ -91,7 +91,8 @@ export default class Experiment extends Component {
       let theme = createMuiTheme({
         palette: {direction: devTestContent.direction || 'ltr'},
         typography: {
-          fontFamily: ['Samim', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
+          fontFamily: ['Samim', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(','),
+          useNextVariants: true
         }
       });
 
@@ -109,7 +110,8 @@ export default class Experiment extends Component {
       let theme = createMuiTheme({
         palette: {direction: demoReflectContent.direction || 'ltr'},
         typography: {
-          fontFamily: ['Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
+          fontFamily: ['-apple-system', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(','),
+          useNextVariants: true
         }
       });
 
@@ -127,7 +129,8 @@ export default class Experiment extends Component {
       let theme = createMuiTheme({
         palette: {direction: demoDictatorContent.direction || 'ltr'},
         typography: {
-          fontFamily: ['Samim', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
+          fontFamily: ['Samim', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(','),
+          useNextVariants: true
         }
       });
 
@@ -147,7 +150,8 @@ export default class Experiment extends Component {
         let theme = createMuiTheme({
           palette: {direction: res.data.direction || 'ltr'},
           typography: {
-            fontFamily: ['Samim', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(',')
+            fontFamily: ['Samim', 'Helvetica Neue', 'Arial', 'Helvetica', 'sans-serif'].join(','),
+            useNextVariants: true
           }
         });
 

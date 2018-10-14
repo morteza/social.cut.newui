@@ -316,7 +316,7 @@ export default class TextualDictator extends Component {
         </Grid>
         
         <Grid item className="padded-slider">
-        <Typography id="label" align="center" variant="title">سهم شما</Typography>
+        <Typography id="label" align="center" variant="h6">سهم شما</Typography>
         <Slider value={this.state.meShare} min={0} max={this.props.element.resources} step={1} onChange={this.handleProposalSliderChange} classes={{root: "textual-dg-slider-root"}} />
         <Button color="primary" fullWidth mini onClick={() => this.nextTrial('proposed')} variant="contained">ارائهٔ پیشنهاد</Button>
         </Grid>

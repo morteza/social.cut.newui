@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, CardContent, Typography, Button, CardHeader, Avatar, LinearProgress } from '@material-ui/core';
+import { Grid, Card, CardContent, Button, CardHeader, Avatar, LinearProgress } from '@material-ui/core';
 
 import { DragDropContainer, DropTarget } from 'react-drag-drop-container';
 
