@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextField, Grid, FormControl, InputLabel, Input, MuiThemeProvider } from '@material-ui/core';
+import { TextField, Grid } from '@material-ui/core';
 
 import CutElement from './element';
 

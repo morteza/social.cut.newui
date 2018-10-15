@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import {Grid, CircularProgress, Button, MuiThemeProvider, createMuiTheme, LinearProgress, Dialog, DialogContent, DialogTitle, Snackbar } from '@material-ui/core';
+import {Grid, CircularProgress, Button, MuiThemeProvider, createMuiTheme, LinearProgress, Dialog, DialogTitle, Snackbar } from '@material-ui/core';
 
 import {API} from '../../utils/api';
 
 import ChoiceElement from '../choice';
+import LikertElement from '../likert';
 import StatementElement from '../statement';
 import DictatorElement from '../dictator';
 import TextualDictatorElement from '../textual-dictator';
@@ -80,7 +81,7 @@ export default class Experiment extends Component {
     progress: 0,
     showProgress: true,
     notification: undefined, // if not undefined notification bar will be shown for 5 seconds
-    theme:  createMuiTheme({palette: {}})
+    theme:  createMuiTheme({palette: {}, typography: {useNextVariants: true}})
   }
 
   componentDidMount(){
@@ -195,6 +196,7 @@ export default class Experiment extends Component {
         if (elem && elem.id === condition.elementId && elem.value === condition.expectedValue) {
           return elem;
         }
+        return undefined;
       });
 
       if (satisfied) 
@@ -303,13 +305,15 @@ export default class Experiment extends Component {
 
   renderElement = (element, direction) => {
 
-    let {responses, ip, timezoneOffset, content} = this.state;
+    let {content} = this.state;
     let typ = undefined;
     if (element && element.type) typ = element.type;
 
     switch (typ) {
       case 'statement':
         return <StatementElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} messages={content.messages} />;
+      case 'likert':
+        return <LikertElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} messages={content.messages} />;
       case 'choice':
         return <ChoiceElement ref={(el) => {if (el) this.getElementResponse = el.getResponse}} element={element} messages={content.messages} />;
       case 'textual-dictator':

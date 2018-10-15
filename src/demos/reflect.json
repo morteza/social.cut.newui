@@ -11,31 +11,11 @@
   "elements": [
     {
       "id": 1,
-      "type": "choice",
+      "type": "likert",
+      "min": 1,
+      "max": 5,
       "required": true,
-      "content": "How were you feeling today?",
-      "choices": [
-        {
-          "value": 1,
-          "label": "Very Bad"
-        },
-        {
-          "value": 2,
-          "label": "Bad"
-        },
-        {
-          "value": 3,
-          "label": "Neutral"
-        },
-        {
-          "value": 4,
-          "label": "Good"
-        },
-        {
-          "value": 5,
-          "label": "Very Good"
-        }
-      ]
+      "content": "On scale of 1 to 5, how were you feeling today? (1=sad, 5=happy)"
     },
     {
       "id": 2,

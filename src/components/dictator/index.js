@@ -96,6 +96,8 @@ export default class Dictator extends Component {
           <br />
           <Button variant="contained" color="secondary" onClick={this.props.onNext}>ادامه</Button>
         </div>;
+      default:
+      
     }
     return <div></div>;
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Card, CardContent, Button, CardHeader, Avatar, LinearProgress, CardActions, CircularProgress, Dialog, DialogContentText, DialogTitle, DialogContent, TextField, DialogActions, MenuItem, Select, InputLabel, FormControl, Input, Typography } from '@material-ui/core';
+import { Grid, Card, Button, CardHeader, Avatar, LinearProgress, CardActions, CircularProgress, Dialog, DialogContentText, DialogTitle, DialogContent, TextField, DialogActions, MenuItem, Select, InputLabel, FormControl, Input, Typography } from '@material-ui/core';
 import Slider from '@material-ui/lab/Slider';
 import styles from './dictator.css';
 
@@ -81,7 +81,7 @@ export default class TextualDictator extends Component {
     var res = '';
     for(var i=0; i<=num.length; i++)
       res += fa.charAt(i);
-    return num;
+    return res;
   }
 
   saveMyProfile =  () => {
@@ -111,9 +111,7 @@ export default class TextualDictator extends Component {
 
   renderPlayBoxesRandomly = () => {
 
-    var {trialState, opponent, me, trial} = this.state;
-    var { trials, opponentResources, selfResources, trialLoadingTime, initialLoadingTime} = this.props.element;
-    let progress = 100 * trial/trials;
+    var { opponent, me } = this.state;
 
     if (this.state.rnd> 0.5) {
       return (
@@ -260,7 +258,7 @@ export default class TextualDictator extends Component {
 
   render() {
     
-    var {trialState, opponent, me, trial} = this.state;
+    var {trialState, me, trial} = this.state;
     var { trials, opponentResources, selfResources, trialLoadingTime, initialLoadingTime} = this.props.element;
     let progress = 100 * trial/trials;
 
