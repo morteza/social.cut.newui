@@ -16,18 +16,9 @@
 .avatar {
   margin-left: 0px !important;
   border-radius: 0% !important;
-  border-bottom-left-radius: 10% !important;
+  border-bottom-right-radius: 10% !important;
   height: 50px !important;
   width: 50px !important;
-}
-
-.dictatorRtlAvatar {
-  margin-left: 16px;
-  margin-right: 0px !important;
-}
-
-.rtl-full-select-field {
-  width: 100% !important;
 }
 
 .dictatorDragger {
@@ -37,14 +28,13 @@
 .resource {
   width: 50px;
   height: auto;
-  padding-left: 5px;
+  padding-right: 5px;
   padding-bottom: 5px;
   padding-top: 5px;
 }
 
 .playerCardHeader {
   align-items: flex-start !important;
-  padding: 0px !important;
 }
 
 .playerCardContent {
@@ -70,4 +60,6 @@
 
 .textual-dg-slider-root {
   width: auto !important;
+  padding-bottom: 30px !important;
+  padding-top: 30px !important;
 }

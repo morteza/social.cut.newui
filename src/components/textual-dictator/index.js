@@ -12,8 +12,8 @@ export default class TextualDictator extends Component {
     trials: this.props.element.trials,
     opponent: this.props.element.personas[Math.floor(Math.random() * this.props.element.personas.length)],
     actions: [],
-    meShare: 0,
-    opponentShare: this.props.element.resources,
+    meShare: Math.floor(this.props.element.resources/2),
+    opponentShare: this.props.element.resources - Math.floor(this.props.element.resources/2),
     me: undefined,
     meAge: '',
     meGender: 'female',
@@ -76,14 +76,6 @@ export default class TextualDictator extends Component {
 
   }
 
-  convertTofarsiDigits = (num) => {
-    let fa = '۰۱۲۳۴۵۶۷۸۹';
-    var res = '';
-    for(var i=0; i<=num.length; i++)
-      res += fa.charAt(i);
-    return res;
-  }
-
   saveMyProfile =  () => {
 
     if (!this.state.meName || !this.state.meGender || !this.state.meDescription) {
@@ -120,15 +112,14 @@ export default class TextualDictator extends Component {
       <Grid item>
         <Card>
           <CardHeader 
-            title={`${me.name} (خودم)`}
+            title={`${me.name} (me)`}
             avatar = {<Avatar aria-label="My Avatar" classes={{colorDefault: 'avatar'}}>{me.gender}</Avatar>}
-            classes = {{avatar: 'dictatorRtlAvatar'}}
             className = "playerCardHeader"
             subheader = {me.description}
             />
           <CardActions>
             <Grid container alignItems="center" direction="column">
-            <Grid item>{this.convertTofarsiDigits(this.state.meShare)} سکه</Grid>
+            <Grid item>{this.state.meShare} coins</Grid>
             </Grid>
           </CardActions>
         </Card>
@@ -139,13 +130,12 @@ export default class TextualDictator extends Component {
           <CardHeader 
             title={opponent.title}
             avatar = {<Avatar aria-label="Opponent Avatar" classes={{colorDefault: 'avatar'}}>{opponent.avatar}</Avatar>}
-            classes = {{avatar: 'dictatorRtlAvatar'}}
             className = "playerCardHeader"
             subheader = {opponent.description}
             />
           <CardActions>
             <Grid container alignItems="center" direction="column">
-            <Grid item>{this.convertTofarsiDigits(this.state.opponentShare)} سکه</Grid>
+            <Grid item>{this.state.opponentShare} coins</Grid>
             </Grid>
           </CardActions>
         </Card>
@@ -164,13 +154,12 @@ export default class TextualDictator extends Component {
         <CardHeader 
           title={opponent.title}
           avatar = {<Avatar aria-label="Opponent Avatar" classes={{colorDefault: 'avatar'}}>{opponent.avatar}</Avatar>}
-          classes = {{avatar: 'dictatorRtlAvatar'}}
           className = "playerCardHeader"
           subheader = {opponent.description}
           />
         <CardActions>
           <Grid container alignItems="center" direction="column">
-          <Grid item>{this.convertTofarsiDigits(this.state.opponentShare)} سکه</Grid>
+          <Grid item>{this.state.opponentShare} coins</Grid>
           </Grid>
         </CardActions>
       </Card>
@@ -179,15 +168,14 @@ export default class TextualDictator extends Component {
   <Grid item>
       <Card>
         <CardHeader 
-          title={`${me.name} (خودم)`}
+          title={`${me.name} (me)`}
           avatar = {<Avatar aria-label="My Avatar" classes={{colorDefault: 'avatar'}}>{me.gender}</Avatar>}
-          classes = {{avatar: 'dictatorRtlAvatar'}}
           className = "playerCardHeader"
           subheader = {me.description}
           />
         <CardActions>
           <Grid container alignItems="center" direction="column">
-          <Grid item>{this.convertTofarsiDigits(this.state.meShare)} سکه</Grid>
+          <Grid item>{this.state.meShare} coins</Grid>
           </Grid>
         </CardActions>
       </Card>
@@ -204,7 +192,7 @@ export default class TextualDictator extends Component {
       aria-labelledby="profile-title" 
       fullScreen={true}
       open={this.state.me===undefined}>
-        <DialogTitle id="profile-title">اطلاعات شما</DialogTitle>
+        <DialogTitle id="profile-title">Your Information</DialogTitle>
 
         <DialogContent>
           <DialogContentText>
@@ -213,44 +201,41 @@ export default class TextualDictator extends Component {
           <Grid container direction="column" justify="space-between" alignItems="stretch">
             <Grid container direction="column" justify="space-between" alignItems="stretch">
             <FormControl>
-          <InputLabel htmlFor="gender">جنسیت</InputLabel>
+          <InputLabel htmlFor="gender">Gender</InputLabel>
           <Select
             value={this.state.meGender}
             required
             autoFocus
             onChange={(e) => this.handleInputChange(e, 'meGender')}
-            classes={{select:"rtl-full-select-field"}}
             input={<Input id="meGender" name="meGender"/>}>
-            <MenuItem value="زن">زن</MenuItem>
-            <MenuItem value="مرد">مرد</MenuItem>
+            <MenuItem value="female">Female</MenuItem>
+            <MenuItem value="male">Male</MenuItem>
           </Select>
         </FormControl>
             <TextField
                     fullWidth
                     required
                     margin="dense"
-                    classes={{root:"rtl-text-field"}}
                     onChange={(e) => this.handleInputChange(e, 'meName')}
                     id="name"
                     value={this.state.meName}
-                    label="نام"
+                    label="name"
                     type="text" />
               </Grid>
         <TextField
               fullWidth
               required
               margin="dense"
-              classes={{root:"rtl-text-field"}}
               onChange={(e) => this.handleInputChange(e, 'meDescription')}
               id="description"
-              label="توصیف یک خطی دربارهٔ خودتان "
+              label="Describe yourself in a single line"
               value={this.state.meDescription}
               type="text" />
               </Grid>
           </DialogContent>
           <DialogActions>
           <Button onClick={() => this.saveMyProfile()} color="primary" variant="contained">
-            شروع
+            Start the Game
           </Button>
         </DialogActions>
     </Dialog>);
@@ -314,9 +299,9 @@ export default class TextualDictator extends Component {
         </Grid>
         
         <Grid item className="padded-slider">
-        <Typography id="label" align="center" variant="h6">سهم شما</Typography>
+        <Typography id="label" align="center" variant="h6">Your Share</Typography>
         <Slider value={this.state.meShare} min={0} max={this.props.element.resources} step={1} onChange={this.handleProposalSliderChange} classes={{root: "textual-dg-slider-root"}} />
-        <Button color="primary" fullWidth mini onClick={() => this.nextTrial('proposed')} variant="contained">ارائهٔ پیشنهاد</Button>
+        <Button color="primary" fullWidth mini onClick={() => this.nextTrial('proposed')} variant="contained">Propose</Button>
         </Grid>
 
         {this.renderPlayBoxesRandomly()}
