@@ -10,70 +10,6 @@
   },
   "elements": [
     {
-      "id": 8,
-      "type": "textual-dictator",
-      "content": "Please share according to the instruction.",
-      "trials": 10,
-      "resources": 10,
-      "selfResources": "$5",
-      "opponentResources": "$10",
-      "randomizeResources": true,
-      "randomizedPlayerBoxes": true,
-      "uniquePersonas": true,
-      "initialLoadingTime": 8000,
-      "trialLoadingTime": 5000,
-      "messages": {
-        "startingTheGame": "We are looking for an online opponent. Please wait...",
-        "startingTheTrial": "Preparing for a new round and finding an available opponent. Please wait...",
-        "instruction": "Hello, play with this opponent",
-        "finished": "Game is finished"
-      },
-      "personas": [
-        {
-          "id": 1,
-          "avatar": "Male",
-          "age": 13,
-          "title": "Dave",
-          "description": "از تهران، گیتار و موزیک دوست دارم."
-        },
-        {
-          "id": 2,
-          "avatar": "Female",
-          "age": 12,
-          "title": "Mina",
-          "description": "تهران، نقاشی و موسیقی"
-        },
-        {
-          "id": 3,
-          "avatar": "Female",
-          "age": 14,
-          "title": "Tania",
-          "description": "تهرانی، شرکت‌کننده در المپیاد ریاضی"
-        },
-        {
-          "id": 4,
-          "avatar": "Female",
-          "age": 13,
-          "title": "Mary",
-          "description": "تهران، فرزانگان، عاشق مغز و نوروساینس"
-        },
-        {
-          "id": 5,
-          "avatar": "Male",
-          "age": 16,
-          "title": "Andy",
-          "description": "تهران. الکترونیک و فیفا و PES خوراکمه."
-        },        
-        {
-          "id": 6,
-          "avatar": "Male",
-          "age": 17,
-          "title": "Jason",
-          "description": "تهرانی. علاقه‌مند به برق. برای کنکور دارم آماده می‌شم."
-        }
-      ]
-    },
-    {
       "id": 1,
       "type": "statement",
       "content": "Hello.<br/><br/>Welcome to our school experiment.<br /> Please answer to question accurately and with patience.<br/> Thank you!"
@@ -114,31 +50,35 @@
       "id": 5,
       "type": "choice",
       "required": true,
-      "content": "سطح تحصیلات خود را مشخص کنید.",
+      "content": "What is your education level?",
       "choices": [
         {
-          "value": "1",
-          "label": "ابتدایی"
+          "value": "elementary",
+          "label": "Elementary school"
         },
         {
-          "value": "2",
-          "label": "راهنمایی"
+          "value": "somehighschool",
+          "label": "Some high school"
         },
         {
-          "value": "3",
-          "label": "متوسطه اول"
+          "value": "highschool",
+          "label": "High school graduate"
         },
         {
-          "value": "4",
-          "label": "متوسطه دوم"
+          "value": "somecollege",
+          "label": "Some college"
         },
         {
-          "value": "5",
-          "label": "دیپلم"
+          "value": "college",
+          "label": "College graduate"
         },
         {
-          "value": "6",
-          "label": "تحصیلات دانشگاهی"
+          "value": "somegraduate",
+          "label": "Some graduate"
+        },
+        {
+          "value": "graduate",
+          "label": "Graduate (M.Sc., Doctorate, etc)"
         }
       ]
     },
@@ -146,7 +86,7 @@
       "id": 6,
       "type": "choice",
       "required": true,
-      "content": "آیا همهٔ حواستان به این آزمون است؟",
+      "content": "Are you fully focused and only pay attention to this experiment?",
       "choices": [
         {
           "value": "yes",
@@ -161,19 +101,83 @@
     {
       "id": 7,
       "type": "statement",
-      "content": "<h2>راهنمای بازی</h2><br /><br />در بازی پیش رو شما به صورت آنلاین با شرکت‌کنندهٔ دیگری بازی خواهید کرد. این بازی چند مرحله دارد و تعداد این مرحله بستگی به تعداد شرکت‌کنندگان آنلاین در هنگام بازی شما دارد.</br />در هر مرحله از بازی، شما ده هزار تومان پول دارید که باید آن را به هر مقداری که می‌خواهید بین خود و شرکت‌کننده مقابل تقسیم کنید.<br />در پایان با توجه به پول‌هایی که به دست آوردید، مجموع امتیاز شما و افرادی که با آن‌ها بازی کردید محاسبه خواهد شد. با توجه به امتیاز کسب شده، به قید قرعه به ۳۰ نفر از شرکت‌کنندگان جوایز نقدی تعلق خواهد گرفت.<br/>"
+      "content": "<h2>Game Instruction</h2><br /><br />در بازی پیش رو شما به صورت آنلاین با شرکت‌کنندهٔ دیگری بازی خواهید کرد. این بازی چند مرحله دارد و تعداد این مرحله بستگی به تعداد شرکت‌کنندگان آنلاین در هنگام بازی شما دارد.</br />در هر مرحله از بازی، شما ده هزار تومان پول دارید که باید آن را به هر مقداری که می‌خواهید بین خود و شرکت‌کننده مقابل تقسیم کنید.<br />در پایان با توجه به پول‌هایی که به دست آوردید، مجموع امتیاز شما و افرادی که با آن‌ها بازی کردید محاسبه خواهد شد. با توجه به امتیاز کسب شده، به قید قرعه به ۳۰ نفر از شرکت‌کنندگان جوایز نقدی تعلق خواهد گرفت.<br/>"
+    },
+    {
+      "id": 8,
+      "type": "textual-dictator",
+      "content": "Please share according to the instruction.",
+      "trials": 10,
+      "resources": 10,
+      "selfResources": "$5",
+      "opponentResources": "$10",
+      "randomizeResources": true,
+      "randomizedPlayerBoxes": true,
+      "uniquePersonas": true,
+      "initialLoadingTime": 8000,
+      "trialLoadingTime": 5000,
+      "messages": {
+        "startingTheGame": "We are looking for an online opponent. Please wait...",
+        "startingTheTrial": "Preparing for a new round and finding an available opponent. Please wait...",
+        "instruction": "Hello, play with this opponent",
+        "finished": "Game is finished"
+      },
+      "personas": [
+        {
+          "id": 1,
+          "avatar": "Male",
+          "age": 13,
+          "title": "Dave",
+          "description": "From New York, loves guitar and music"
+        },
+        {
+          "id": 2,
+          "avatar": "Female",
+          "age": 12,
+          "title": "Mina",
+          "description": "LA, likes painting"
+        },
+        {
+          "id": 3,
+          "avatar": "Female",
+          "age": 14,
+          "title": "Tania",
+          "description": "From Tehran, Iran. I like math."
+        },
+        {
+          "id": 4,
+          "avatar": "Female",
+          "age": 13,
+          "title": "Mary",
+          "description": "Loves neuroscience and brain, from New York."
+        },
+        {
+          "id": 5,
+          "avatar": "Male",
+          "age": 16,
+          "title": "Pedro",
+          "description": "loves PS4, PES, and FIFA, from Portugal."
+        },        
+        {
+          "id": 6,
+          "avatar": "Male",
+          "age": 17,
+          "title": "Jason",
+          "description": "Preparing for college, and from Tehran."
+        }
+      ]
     },
     {
       "id": 9,
       "type": "text",
       "placeholder": "Opponent's Name",
       "content": "Please write down one of you opponent's name.",
-      "help": "در صورتی که نام کسی را به خاطر نمی‌آورید، می‌توانید این بخش را خالی بگذارید."
+      "help": "If you don't remember any opponent name, leave this field blank."
     },
     {
       "id": 10,
       "type": "statement",
-      "content": "با تشکر از شما. آزمون به پایان رسید. <br /><br /> نتایج قرعه‌کشی از طریق تلفن و پست الکترونیکی برای شما ارسال می‌شود. از همکاری شما بسیار متشکریم."
+      "content": "Thank you for participating in this experiment. The questionnaire is finished.<br /><br />We will contact you via email/mobile if you win in the raffle."
     }
   ]
 }
